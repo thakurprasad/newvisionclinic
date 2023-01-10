@@ -9,7 +9,7 @@ $marital_status = $this->config->item('marital_status');
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title"><?php echo $this->lang->line('add_patient'); ?></h4> 
             </div>
-            <form id="formaddpa" accept-charset="utf-8" action="" enctype="multipart/form-data" method="post"> 
+            <form id="formaddpa" accept-charset="utf-8" action="" enctype="multipart/form-data" method="post"> ====
                 <div class="scroll-area">
                     <div class="modal-body pt0 pb0">
                         <div class="ptt10">
