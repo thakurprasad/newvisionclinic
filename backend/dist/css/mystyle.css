@@ -1,3 +1,22 @@
 .unregistered-alert {
     display: none;
 }
+
+.search-patient-role-8 {
+    display: none;
+}
+
+ul.patient-search-details li a{
+    display: inherit;
+}
+
+
+.edit-visite-details-role-3, 
+.edit-visite-details-role-4, 
+.edit-visite-details-role-5, 
+.edit-visite-details-role-6, 
+.edit-visite-details-role-7, 
+.edit-visite-details-role-9
+{
+    display: none;    
+}

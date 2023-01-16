@@ -843,7 +843,7 @@ This Function is used to Add Patient
  */
 
     public function addpatient()
-    {
+    {      
         $custom_fields = $this->customfield_model->getByBelong('patient');
 
         if ((int) $_POST['age']['day'] == 0 && (int) $_POST['age']['month'] == 0 && (int) $_POST['age']['year'] == 0) {
@@ -882,8 +882,8 @@ This Function is used to Add Patient
             if (!empty($custom_fields)) {
                 foreach ($custom_fields as $custom_fields_key => $custom_fields_value) {
                     if ($custom_fields_value['validation']) {
-                        $custom_fields_id                                                = $custom_fields_value['id'];
-                        $custom_fields_name                                              = $custom_fields_value['name'];
+                        $custom_fields_id  = $custom_fields_value['id'];
+                        $custom_fields_name = $custom_fields_value['name'];
                         $error_msg2["custom_fields[patient][" . $custom_fields_id . "]"] = form_error("custom_fields[patient][" . $custom_fields_id . "]");
                     }
                 }
@@ -971,6 +971,12 @@ This Function is used to Add Patient
                 'day'                   => $this->input->post('age[day]'),
                 'identification_number' => $this->input->post('identification_number'),
                 'is_active'             => 'yes',
+                /**
+                 * New Columns data added By T.Prasad at 11-01-2023
+                 * */
+                'nationality'           => $this->input->post('nationality'),
+                'voter_id'              => $this->input->post('voter_id'),
+                'passport_no'           => $this->input->post('passport_no'),
             );
 
             $custom_field_post  = $this->input->post("custom_fields[patient]");
@@ -1017,7 +1023,28 @@ This Function is used to Add Patient
             } else {
                 $data_img = array('id' => $insert_id, 'image' => 'uploads/patient_images/no_image.png');
             }
+            
             $this->patient_model->add($data_img);
+
+            if (isset($_FILES["upload_voter_id"]) && !empty($_FILES['upload_voter_id']['name'])) {
+                $fileInfo = pathinfo($_FILES["upload_voter_id"]["name"]);
+                $img_name = $insert_id . '.' . $fileInfo['extension'];
+                move_uploaded_file($_FILES["upload_voter_id"]["tmp_name"], "./uploads/voter_images/" . $img_name);
+                $data_img = array('id' => $insert_id, 'voter_images' => 'uploads/voter_images/' . $img_name);
+            } else {
+                $data_img = array('id' => $insert_id, 'voter_images' => 'uploads/voter_images/no_image.png');
+            }
+            $this->patient_model->add($data_img);
+
+            if (isset($_FILES["upload_passport"]) && !empty($_FILES['upload_passport']['name'])) {
+                $fileInfo = pathinfo($_FILES["upload_passport"]["name"]);
+                $img_name = $insert_id . '.' . $fileInfo['extension'];
+                move_uploaded_file($_FILES["upload_passport"]["tmp_name"], "./uploads/passport_images/" . $img_name);
+                $data_img = array('id' => $insert_id, 'passport_image' => 'uploads/passport_images/' . $img_name);
+            } else {
+                $data_img = array('id' => $insert_id, 'passport_image' => 'uploads/passport_images/no_image.png');
+            }
+            $this->patient_model->add($data_img);            
 
             $sender_details = array('id' => $insert_id, 'credential_for' => 'patient', 'username' => $this->patient_login_prefix . $insert_id, 'password' => $user_password, 'contact_no' => $this->input->post('mobileno'), 'email' => $this->input->post('email'));
 
@@ -2151,6 +2178,7 @@ This Function is used to Import Multiple Patient Records
 
     public function visitdetails($id, $opdid)
     {
+
         if (!empty($id)) {
             $result         = $this->patient_model->getDetails($opdid);
             $data['result'] = $result;
@@ -2234,6 +2262,10 @@ This Function is used to Import Multiple Patient Records
             $data['graph']               = $this->transaction_model->opd_bill_paymentbycase_id($result['case_reference_id']);
             
             $data['recent_record_count'] = 5;
+
+            # added By T. Prasad at 16-01-2023
+            $data['get_opd_visit_details']  = $this->patient_model->getopdvisitDetailsbyvisitid($opdid);
+
 
             $this->load->view("layout/header");
             $this->load->view("admin/patient/visitDetails", $data);

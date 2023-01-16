@@ -2,6 +2,8 @@
 $currency_symbol = $this->customlib->getHospitalCurrencyFormat();
 $genderList = $this->customlib->getGender();
 $case_reference_id=$result['case_reference_id'];
+
+$opd_visit_details =  $this->patient_model->getopdvisitDetailsbyvisitid($visitminid);
 ?> 
 <link rel="stylesheet" href="<?php echo base_url(); ?>backend/plugins/timepicker/bootstrap-timepicker.min.css">
 <script src="<?php echo base_url(); ?>backend/plugins/timepicker/bootstrap-timepicker.min.js"></script>
@@ -63,7 +65,8 @@ $case_reference_id=$result['case_reference_id'];
                                 <div class="col-lg-6 col-md-6 col-sm-12 border-r">
 
                                     <div class="box-header border-b mb10 pl-0 pt0">
-                                        <h3 class="text-uppercase bolds mt0 ptt10 pull-left font14"><?php echo composePatientName($result['patient_name'],$result['patient_id']); ?></h3>
+                                        <h3 class="text-uppercase bolds mt0 ptt10 pull-left font14"> <?php echo composePatientName($result['patient_name'],$result['patient_id']); ?></h3>
+                                        <?php // print_r($result); ?>
                                         <div class="pull-right">
                                              <div class="editviewdelete-icon pt8 text-center">
                                                 <?php if ($this->rbac->hasPrivilege('opd_patient', 'can_edit')) { ?>
@@ -128,6 +131,11 @@ $case_reference_id=$result['case_reference_id'];
                                                    
                                                     
                                                 </table>
+                                                <div class="opd_symptoms_data_view">
+<?php 
+                                                print_r($opd_visit_details);
+                                                ?>                                
+                                                </div>
                                             </div><!--./col-lg-7-->
                                         </div><!--./row-->
                                          <hr class="hr-panel-heading hr-10">
@@ -1648,7 +1656,12 @@ if (empty($timeline_list)) {
                                         </div><!--./row--> 
 
                                     </div><!--./col-md-8--> 
-                                    <div class="col-lg-4 col-md-4 col-sm-4 col-eq ptt10">
+<?php 
+$role_array = $this->session->userdata['hospitaladmin']['roles'];
+$role = array_values($role_array)[0];
+ ?>
+
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-eq ptt10 edit-visite-details-role-<?= $role ?>">
                                         <div class="row">
                                             <div class="col-sm-6">
                                                 <div class="form-group">
@@ -4802,7 +4815,7 @@ $(document).on('click','#add_newcharge',function(){
             data: {visitid: visitid},
             dataType: 'json',
             success: function (data) {
- 
+    
                 $exampleDestroy.val(data.cons_doctor).select2('destroy').select2()
                 $('#customfield').html(data.custom_fields_value);
                 $("#appointmentdate").val(data.appointment_date);
@@ -4815,6 +4828,8 @@ $(document).on('click','#add_newcharge',function(){
                 $("#edit_refference").val(data.refference);
                 $("#edit_revisit_note").val(data.note);
                 $('select[id="edit_organisation"] option[value="'+data.organisation_id+'"]').attr("selected","selected");
+/*var opd_symptoms_data_view = 'height : ' + data.height + '<br>Weight: '+ data.weight; 
+$(".opd_symptoms_data_view").html(opd_symptoms_data_view);*/
                 $("#edit_height").val(data.height);
                 $("#edit_weight").val(data.weight);
                 $("#edit_bp").val(data.bp);

@@ -122,7 +122,7 @@ $currency_symbol = $this->customlib->getHospitalCurrencyFormat();
                                                         <span id="marital_status"></span>
                                                     </li> 
                                                 </ul>  
-                                                <ul class="singlelist">  
+                                                <ul class="singlelist patient-search-details">  
                                                     <li>
                                                         <i class="fas fa-hourglass-half" data-toggle="tooltip" data-placement="top" title="<?php echo $this->lang->line('age'); ?>"></i>
                                                         <span id="age"></span>
@@ -161,6 +161,20 @@ $currency_symbol = $this->customlib->getHospitalCurrencyFormat();
                                                         <b><?php echo $this->lang->line("national_identification_number"); ?> </b> 
                                                         <span id="identification_number"></span>
                                                     </li>   
+
+                                                    <li>
+                                                        <b><?php echo $this->lang->line("nationality"); ?> </b> 
+                                                        <span id="nationality"></span>
+                                                    </li> 
+                                                    <li>
+                                                        <b><?php echo $this->lang->line("passport_no"); ?> </b> 
+                                                        <span id="passport_no"></span>
+                                                    </li> 
+                                                    <li>
+                                                        <b><?php echo $this->lang->line("voter_id"); ?> </b> 
+                                                        <span id="voter_id"></span>
+                                                    </li>   
+
                                                 </ul>                               
                                             </div><!-- ./col-md-9 -->
                                             <div class="col-md-3 col-sm-3 col-xs-3"> 
@@ -174,7 +188,12 @@ $currency_symbol = $this->customlib->getHospitalCurrencyFormat();
                                             </div><!-- ./col-md-3 --> 
                                         </div>
 
-                                        <div class="row">
+<?php 
+$role_array = $this->session->userdata['hospitaladmin']['roles'];
+$role = array_values($role_array)[0];
+ ?>
+
+                                        <div class="row search-patient-role-<?= $role ?>">
                                             <div class="col-md-12"> 
                                                 <div class="dividerhr"></div>
                                             </div><!--./col-md-12-->
@@ -271,7 +290,7 @@ $currency_symbol = $this->customlib->getHospitalCurrencyFormat();
                                             </div>       
                                         </div><!--./row--> 
                                     </div><!--./col-md-8--> 
-                                    <div class="col-lg-4 col-md-4 col-sm-4 col-eq ptt10">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-eq ptt10 search-patient-appointment-role-<?= $role ?>">
                                         <div class="row">
                                             <div class="col-sm-6">
                                                 <div class="form-group">
@@ -811,6 +830,11 @@ $currency_symbol = $this->customlib->getHospitalCurrencyFormat();
                     $("#marital_status").html(res.marital_status);
                     $("#blood_group").html(res.blood_group_name);
                     $("#allergies").html(res.known_allergies);
+                    $("#nationality").html(res.nationality);
+var voter_images = '<a target="_blank" href="<?php echo base_url() ?>'+res.voter_images+'" title="View Voter Image"><i class="fa fa-eye" aria-hidden="true"></i></a>';
+var passport_image = '<a target="_blank" href="<?php echo base_url() ?>'+res.passport_image+'" title-"View Passport Image"><i class="fa fa-eye" aria-hidden="true"></i></a>';
+                    $("#voter_id").html(res.voter_id + ' ' + voter_images);
+                    $("#passport_no").html(res.passport_no + ' ' + passport_image);
                     if(res.image !=null){
                         $("#image").attr("src", '<?php echo base_url() ?>' + res.image+ '<?php echo img_time(); ?>');
                     }else{

@@ -1,6 +1,12 @@
 <?php
 $genderList = $this->customlib->getGender_Patient();
+$getNationality = $this->customlib->getNationality();
 $marital_status = $this->config->item('marital_status');
+
+/*
+$query = $db->query('SELECT * FROM countries');
+$datac =  $query->result();*/
+
 ?>
 <div class="modal fade" id="myModalpa" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog modal-lg" role="document">
@@ -9,7 +15,8 @@ $marital_status = $this->config->item('marital_status');
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title"><?php echo $this->lang->line('add_patient'); ?></h4> 
             </div>
-            <form id="formaddpa" accept-charset="utf-8" action="" enctype="multipart/form-data" method="post"> ====
+            <form id="formaddpa" accept-charset="utf-8" action="" enctype="multipart/form-data" method="post"> 
+<?php //var_dump($datac); ?>                
                 <div class="scroll-area">
                     <div class="modal-body pt0 pb0">
                         <div class="ptt10">
@@ -171,6 +178,60 @@ $marital_status = $this->config->item('marital_status');
                                                 <input name="identification_number" placeholder="" class="form-control" /><?php echo set_value('identification_number'); ?>
                                             </div> 
                                         </div> 
+
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label><?php echo $this->lang->line("nationality"); ?></label> <!-- 
+                                                <input name="nationality" placeholder="" class="form-control" />< ?php echo set_value('nationality'); ?> -->
+                                                 <select class="select2  form-control" name="nationality" id="nationality" style="width: 100%;">
+                                                    <option value=""><?php echo $this->lang->line('select'); ?></option>
+                                                            <?php
+                                                    foreach ($getNationality as $value) {
+                                                        ?>
+                                                        <option value="<?php echo $value; ?>" <?php if (set_value('nationality') == $value) echo "selected"; ?>><?php echo $value; ?></option>
+                                                        <?php
+                                                    }
+                                                    ?>
+                                                </select>
+                                            </div> 
+                                        </div>
+
+                                         <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label><?php echo $this->lang->line("passport_no"); ?></label> 
+                                                <input name="passport_no" placeholder="" class="form-control" /><?php echo set_value('passport_no'); ?>
+                                            </div> 
+                                        </div>
+
+                                           <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label for="upload_passport">
+                                                    <?php echo $this->lang->line('upload_passport'); ?>
+                                                </label>
+                                                <div><input class="filestyle form-control" type='file' name='upload_passport' id="upload_passport" size='20' data-height="26" />
+                                                </div>
+                                                <span class="text-danger"><?php echo form_error('upload_passport'); ?></span>
+                                            </div>
+                                        </div> 
+
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label><?php echo $this->lang->line("voter_id"); ?></label> 
+                                                <input name="voter_id" placeholder="" class="form-control" /><?php echo set_value('voter_id'); ?>
+                                            </div> 
+                                        </div>  
+
+                                         <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label for="upload_voter_id">
+                                                    <?php echo $this->lang->line('upload_voter_id'); ?>
+                                                </label>
+                                                <div><input class="filestyle form-control" type='file' name='upload_voter_id' id="upload_voter_id" size='20' data-height="26" />
+                                                </div>
+                                                <span class="text-danger"><?php echo form_error('upload_voter_id'); ?></span>
+                                            </div>
+                                        </div> 
+
                                         <div class="">
                                             
                                             <?php
