@@ -128,12 +128,44 @@ $opd_visit_details =  $this->patient_model->getopdvisitDetailsbyvisitid($visitmi
                                                         <td class="bolds"><?php echo $this->lang->line('phone'); ?></td>
                                                          <td><?php echo $result['mobileno']; ?></td>
                                                     </tr>
+                                                    <?php /** new code added be T. Prasad At 17-01-2023*/ ?>
+            <tr>
+                <td class="bolds"><?php echo $this->lang->line('height'); ?></td>
+                 <td><?php echo $opd_visit_details['height']; ?></td>
+            </tr>
+            <tr>
+                <td class="bolds"><?php echo $this->lang->line('weight'); ?></td>
+                 <td><?php echo $opd_visit_details['weight']; ?></td>
+            </tr>
+            <tr>
+                <td class="bolds"><?php echo $this->lang->line('bp'); ?></td>
+                 <td><?php echo $opd_visit_details['bp']; ?></td>
+            </tr>
+            <tr>
+                <td class="bolds"><?php echo $this->lang->line('pulse'); ?></td>
+                 <td><?php echo $opd_visit_details['pulse']; ?></td>
+            </tr>
+            <tr>
+                <td class="bolds"><?php echo $this->lang->line('temperature'); ?></td>
+                 <td><?php echo $opd_visit_details['temperature']; ?></td>
+            </tr>
+            <tr>
+                <td class="bolds"><?php echo $this->lang->line('respiration'); ?></td>
+                 <td><?php echo $opd_visit_details['respiration']; ?></td>
+            </tr>
+           
+            <tr>
+                <td class="bolds"><?php echo $this->lang->line('note'); ?></td>
+                 <td><?php echo $opd_visit_details['note']; ?></td>
+            </tr>
+            
+
                                                    
                                                     
                                                 </table>
                                                 <div class="opd_symptoms_data_view">
 <?php 
-                                                print_r($opd_visit_details);
+                                              //  print_r($opd_visit_details);
                                                 ?>                                
                                                 </div>
                                             </div><!--./col-lg-7-->
