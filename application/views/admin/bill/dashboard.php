@@ -30,6 +30,7 @@
                                     
                                 </div>
                             </div><!--./col-lg-4-->
+                        
                         <?php } if ($this->rbac->hasPrivilege('pathology_billing', 'can_view')) {?>
                             <div class="col-lg-4 col-md-6 col-sm-6">
                                 <div class="billingbox text-center">
@@ -39,7 +40,19 @@
                                     </a>
                                 </div>
                             </div><!--./col-lg-4-->
-                        <?php } if ($this->rbac->hasPrivilege('radiology_billing', 'can_view')) {?>
+                        <?php } 
+                        if ($this->rbac->hasPrivilege('pharmacy_billing', 'can_view')) {?>
+                            <div class="col-lg-4 col-md-6 col-sm-6">
+                                <div class="billingbox text-center">
+                                    <a href="<?php echo base_url('admin/pharmacy/bill');?>">
+                                        <div class="billingbox-icon"><i class="fas fa-mortar-pestle"></i></div> 
+                                        <p><?php echo $this->lang->line('pharmacy'); ?></p>
+                                    </a>
+                                </div>
+                            </div><!--./col-lg-4-->
+                        <?php } 
+
+                        if ($this->rbac->hasPrivilege('radiology_billing', 'can_view')) {?>
                             <div class="col-lg-4 col-md-6 col-sm-6">
                                 <div class="billingbox text-center">
                                     <a href="<?php echo base_url('admin/bill/radiology');?>">

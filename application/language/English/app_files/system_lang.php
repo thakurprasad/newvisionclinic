@@ -2115,9 +2115,11 @@ $lang["add_credential"] = "Add Credential";
 $lang["global"]			= "Global";
 $lang["what_is_new_in"] = "What\"s new in";
 $lang["android_app_purchase_code_already_registered"] = "Android App Purchase Code already registered";
-
+# added by T.Prasad 
 $lang['nationality'] = 'Nationality';
 $lang['passport_no'] = 'Passport No';
 $lang['upload_passport'] = 'Upload Passport';
 $lang['voter_id']    = 'Voter ID No';
 $lang['upload_voter_id']    = 'Upload Voter ID';
+$lang['patient_signature']  = 'Patient Sisgnature';
+$lang['all_select']  = 'All Select';

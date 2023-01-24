@@ -371,3 +371,5 @@ if(!empty($bloodissue_data)){
         </div>
     </div>
 </div>
+
+<p style="padding-top:50px"><?php echo $this->lang->line('patient_signature'); ?></p>

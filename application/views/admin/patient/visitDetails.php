@@ -4,6 +4,9 @@ $genderList = $this->customlib->getGender();
 $case_reference_id=$result['case_reference_id'];
 
 $opd_visit_details =  $this->patient_model->getopdvisitDetailsbyvisitid($visitminid);
+
+$role_array = $this->session->userdata['hospitaladmin']['roles'];
+$role = array_values($role_array)[0];
 ?> 
 <link rel="stylesheet" href="<?php echo base_url(); ?>backend/plugins/timepicker/bootstrap-timepicker.min.css">
 <script src="<?php echo base_url(); ?>backend/plugins/timepicker/bootstrap-timepicker.min.js"></script>
@@ -300,8 +303,8 @@ $opd_visit_details =  $this->patient_model->getopdvisitDetailsbyvisitid($visitmi
                                     </div>
 
                                 </div><!--./col-lg-6-->
-                                 <div class="col-lg-6 col-md-6 col-sm-12">
-                                         <div class="row">
+                                 <div class="col-lg-6 col-md-6 col-sm-12 ">
+                                         <div class="row hide opd-visit-details-bill-role-<?= $role ?>">
                                             <div class="col-md-6 project-progress-bars">
                                                 <div class="row">
                                                     <div class="col-md-12 mtop5">
@@ -333,10 +336,10 @@ $opd_visit_details =  $this->patient_model->getopdvisitDetailsbyvisitid($visitmi
                                                         </div>
                                                     </div>
                                                 </div>    
-                                           </div><!--./col-lg-6-->
+                                           </div><!--./col-lg-6-->  
                                             
                                         </div><!--./row-->
-                                        <div class="row">
+                                        <div class="row hide opd-visit-details-bill-role-<?= $role ?>">
                                             <div class="col-md-6 project-progress-bars">
                                                 <div class="row">
                                                     <div class="col-md-12 mtop5">
@@ -371,7 +374,7 @@ $opd_visit_details =  $this->patient_model->getopdvisitDetailsbyvisitid($visitmi
                                            </div><!--./col-lg-6-->
                                             
                                         </div><!--./row-->
-                                        <div class="row">
+                                        <div class="row hide opd-visit-details-bill-role-<?= $role ?>">
                                             <div class="col-md-6 project-progress-bars">
                                                 <div class="row">
                                                     <div class="col-md-12 mtop5">
@@ -567,13 +570,13 @@ $opd_visit_details =  $this->patient_model->getopdvisitDetailsbyvisitid($visitmi
 
                                         <!---consultant section-->
                                        
-                                         <div class="box-header mb10 pl-0">
+                                         <div class="box-header mb10 pl-0 hide opd-visit-details-bill-role-<?= $role ?>">
                                            <h3 class="text-uppercase bolds mt0 ptt10 pull-left font14"><?php echo $this->lang->line('charges'); ?></h3>
                                            <div class="pull-right">
                                                
                                           </div>
                                         </div>
-                                         <div class="box-header mb10 pl-0">
+                                         <div class="box-header mb10 pl-0 hide opd-visit-details-bill-role-<?= $role ?>">
                                              <div class="table-responsive"> 
                                         <table class="table table-striped table-bordered table-hover">
                                         <thead>
@@ -629,13 +632,13 @@ $opd_visit_details =  $this->patient_model->getopdvisitDetailsbyvisitid($visitmi
                              </div>
 
 
-                                        <div class="box-header mb10 pl-0">
+                                        <div class="box-header mb10 pl-0 hide opd-visit-details-bill-role-<?= $role ?>">
                                            <h3 class="text-uppercase bolds mt0 ptt10 pull-left font14"><?php echo $this->lang->line('payment'); ?></h3>
                                            <div class="pull-right">
                                                
                                           </div>
                                         </div>
-                                         <div class="box-header mb10 pl-0">
+                                         <div class="box-header mb10 pl-0 hide opd-visit-details-bill-role-<?= $role ?>">
                                              <div class="table-responsive"> 
                                       <table class="table table-striped table-bordered table-hover">
                                         <thead>
@@ -1688,12 +1691,9 @@ if (empty($timeline_list)) {
                                         </div><!--./row--> 
 
                                     </div><!--./col-md-8--> 
-<?php 
-$role_array = $this->session->userdata['hospitaladmin']['roles'];
-$role = array_values($role_array)[0];
- ?>
 
-                                    <div class="col-lg-4 col-md-4 col-sm-4 col-eq ptt10 edit-visite-details-role-<?= $role ?>">
+
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-eq ptt10 edit-visite-details-role-<?= $role ?>">s
                                         <div class="row">
                                             <div class="col-sm-6">
                                                 <div class="form-group">

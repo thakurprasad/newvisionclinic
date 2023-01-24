@@ -1,3 +1,22 @@
+/**
+ * 
+ * 
+Role id 
+1       => Admin
+2       => Accountant
+3       => Doctor
+4       => Pharmacist
+5       => Pathologist
+6       => Radiologist
+7       => Super Admin
+8       => Receptionist
+9       => Nurse
+
+ * 
+ * */
+.hide{
+    display: none;
+}
 .unregistered-alert {
     display: none;
 }
@@ -19,4 +38,14 @@ ul.patient-search-details li a{
 .edit-visite-details-role-9
 {
     display: none;    
+}
+
+
+/*--- */
+.opd-visit-details-bill-role-7, 
+.opd-visit-details-bill-role-8,
+.ipd-profile-bill-role-7,
+.ipd-profile-bill-role-8
+{
+    display: block !important;
 }
