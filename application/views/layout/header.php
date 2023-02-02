@@ -65,7 +65,8 @@ if ($this->customlib->getRTL() == "yes") {
         <link rel="stylesheet" href="<?php echo base_url() ?>backend/plugins/select2/select2.min.css">        
         <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/0.8.2/css/flag-icon.min.css">
         <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>/backend/dist/css/bootstrap-select.min.css">
-        <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>/backend/dist/css/mystyle.css">
+
+<link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>/backend/dist/css/mystyle.css">
     </head>
     <script type="text/javascript">
         var baseurl = "<?php echo base_url(); ?>";
@@ -75,7 +76,7 @@ if ($this->customlib->getRTL() == "yes") {
         <?php
 if ($this->config->item('SHLK') == "") {
     ?>
-            <div class="topaleart unregistered-alert">
+            <div class="topaleart hide">
                 <div class="slidealert">
                     <div class="alert alert-dismissible topaleart-inside">
                         <p class="palert">Alert! You are using unregistered version of Smart Hospital. Please <a  href="#" class="purchasemodal">click here</a> to register your purchase code for Smart Hospital.</p>

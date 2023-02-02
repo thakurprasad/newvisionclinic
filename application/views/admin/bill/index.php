@@ -27,24 +27,51 @@ $currency_symbol = $this->customlib->getHospitalCurrencyFormat();
                              <i class="fas fa-bars"></i></button>
                               <ul class="dropdown-menu s-bill-list">
                                 <h3 class="s-bill-title"><?php echo $this->lang->line('single_module_billing'); ?></h3> 
-                                 <?php if ($this->rbac->hasPrivilege('appointment_billing', 'can_view')) {?>
-                                <li><a href="<?php echo base_url('admin/bill/appointment');?>"><i class="fa fa-calendar-check-o"></i><?php echo $this->lang->line('appointment'); ?></a>
-                                </li>
-                                <?php } if ($this->rbac->hasPrivilege('opd_billing', 'can_view')) { ?>
-                                <li><a href="<?php echo base_url('admin/bill/opd');?>"><i class="fas fa-stethoscope"></i> <?php echo $this->lang->line('opd'); ?></a></li>
-                                <?php } if ($this->rbac->hasPrivilege('pathology_billing', 'can_view')) { ?>
-                                <li><a href="<?php echo base_url('admin/bill/pathology');?>"><i class="fas fa-flask"></i>  <?php echo $this->lang->line('pathology'); ?></a>
-                                </li>
-                                <?php } if ($this->rbac->hasPrivilege('radiology_billing', 'can_view')) { ?>
-                                <li><a href="<?php echo base_url('admin/bill/radiology');?>"><i class="fas fa-microscope"></i> <?php echo $this->lang->line('radiology'); ?></a>
-                                </li> 
-                                <?php } if ($this->rbac->hasPrivilege('blood_bank_billing', 'can_view')) { ?>
-                                <li><a href="<?php echo base_url('admin/bill/issueblood');?>"><i class="fas fa-tint"></i>  <?php echo $this->lang->line('blood_issue'); ?></a>
-                                </li>
-                                <?php } if ($this->rbac->hasPrivilege('blood_bank_billing', 'can_view')) { ?>
-                                <li><a href="<?php echo base_url('admin/bill/issuecomponent');?>"><i class="fas fa-burn"></i> <?php echo $this->lang->line('blood_component_issue'); ?></a>
-                                </li>
-                            <?php } ?>
+                                
+                                <?php 
+                                if ($this->module_lib->hasActive('appointment')) {
+                                    if ($this->rbac->hasPrivilege('appointment_billing', 'can_view')) {?>
+                                    
+                                        <li><a href="<?php echo base_url('admin/bill/appointment');?>"><i class="fa fa-calendar-check-o"></i><?php echo $this->lang->line('appointment'); ?></a></li>
+                                        
+                                <?php } 
+                                }
+                                
+                                if ($this->module_lib->hasActive('opd')) {
+                                    if ($this->rbac->hasPrivilege('opd_billing', 'can_view')) { ?>
+                                    
+                                    <li><a href="<?php echo base_url('admin/bill/opd');?>"><i class="fas fa-stethoscope"></i> <?php echo $this->lang->line('opd'); ?></a></li>
+                                    
+                                <?php } 
+                                }
+                                
+                                if ($this->module_lib->hasActive('pathology')) {
+                                    if ($this->rbac->hasPrivilege('pathology_billing', 'can_view')) { ?>
+                                    
+                                    <li><a href="<?php echo base_url('admin/bill/pathology');?>"><i class="fas fa-flask"></i>  <?php echo $this->lang->line('pathology'); ?></a></li>
+                                    
+                                <?php } 
+                                }
+                                
+                                if ($this->module_lib->hasActive('radiology')) {
+                                    if ($this->rbac->hasPrivilege('radiology_billing', 'can_view')) { ?>
+                                    
+                                    <li><a href="<?php echo base_url('admin/bill/radiology');?>"><i class="fas fa-microscope"></i> <?php echo $this->lang->line('radiology'); ?></a></li> 
+                                    
+                                <?php } 
+                                }
+                                
+                                if ($this->module_lib->hasActive('blood_bank')) {
+                                    if ($this->rbac->hasPrivilege('blood_bank_billing', 'can_view')) { ?>
+                                    
+                                    <li><a href="<?php echo base_url('admin/bill/issueblood');?>"><i class="fas fa-tint"></i>  <?php echo $this->lang->line('blood_issue'); ?></a></li>
+                                 
+                                    <li><a href="<?php echo base_url('admin/bill/issuecomponent');?>"><i class="fas fa-burn"></i> <?php echo $this->lang->line('blood_component_issue'); ?></a></li>
+                                    
+                                <?php } 
+                                } 
+                                ?>
+                                
                               </ul>
                             </div>
                         </div>
@@ -72,22 +99,70 @@ $currency_symbol = $this->customlib->getHospitalCurrencyFormat();
                         <div class="nav-tabs-custom border0">
                             <ul class="nav nav-tabs navlistscroll">
                              
-                                <?php if ($this->rbac->hasPrivilege('opd_billing', 'can_view')) {?>
+                                <?php 
+                                if ($this->module_lib->hasActive('opd')) {
+                                    if ($this->rbac->hasPrivilege('opd_billing', 'can_view')) {?>
                           
-                                <li class="active"><a href="#opd" data-toggle="tab" aria-expanded="true" onclick="load_opd_data()"><?php echo $this->lang->line('opd') ?></a></li>
-                                 <?php } if ($this->rbac->hasPrivilege('ipd_billing', 'can_view')) { ?>
-                                <li ><a onclick="load_ipd_data()" href="#ipd" data-toggle="tab" aria-expanded="true"><?php echo $this->lang->line('ipd') ?></a></li> 
-                                <?php } if ($this->rbac->hasPrivilege('pharmacy_billing', 'can_view')) {?>                             
-                                <li ><a href="#pharmacy" onclick="load_pharmacy_data()" data-toggle="tab" aria-expanded="true"><?php echo $this->lang->line('pharmacy') ?></a></li>
-                                 <?php } if ($this->rbac->hasPrivilege('pathology_billing', 'can_view')) {?>
-                                <li ><a href="#pathology" onclick="load_pathology_data()" data-toggle="tab" aria-expanded="true"><?php echo $this->lang->line('pathology') ?></a></li>
-                                 <?php } if ($this->rbac->hasPrivilege('radiology_billing', 'can_view')) { ?>
-                                <li ><a href="#radiology" onclick="load_radiology_data()" data-toggle="tab" aria-expanded="true"><?php echo $this->lang->line('radiology') ?></a></li>
-                                 <?php } if ($this->rbac->hasPrivilege('blood_bank_billing', 'can_view')) { ?>
-                                <li ><a href="#blood_bank" onclick="load_blood_bank_data()" data-toggle="tab" aria-expanded="true"><?php echo $this->lang->line('blood_bank') ?></a></li>
-                                 <?php } if ($this->rbac->hasPrivilege('ambulance_billing', 'can_view')) {?>
-                                <li ><a href="#ambulance" onclick="load_ambulance_data()" data-toggle="tab" aria-expanded="true"><?php echo $this->lang->line('ambulance') ?></a></li>
-                                 <?php } ?>
+                                        <li class="active"><a href="#opd" data-toggle="tab" aria-expanded="true" onclick="load_opd_data()"><?php echo $this->lang->line('opd') ?></a></li>
+                                
+                                <?php 
+                                    } 
+                                } 
+                                
+                                if ($this->module_lib->hasActive('ipd')) {
+                                    if ($this->rbac->hasPrivilege('ipd_billing', 'can_view')) { ?>
+                                
+                                        <li ><a onclick="load_ipd_data()" href="#ipd" data-toggle="tab" aria-expanded="true"><?php echo $this->lang->line('ipd') ?></a></li> 
+                                
+                                <?php 
+                                    } 
+                                } 
+                                    
+                                if ($this->module_lib->hasActive('pharmacy')) {
+                                    if ($this->rbac->hasPrivilege('pharmacy_billing', 'can_view')) {?>                             
+                                        <li ><a href="#pharmacy" onclick="load_pharmacy_data()" data-toggle="tab" aria-expanded="true"><?php echo $this->lang->line('pharmacy') ?></a></li>
+                                    
+                                <?php 
+                                    } 
+                                } 
+                                            
+                                if ($this->module_lib->hasActive('pathology')) {
+                                    if ($this->rbac->hasPrivilege('pathology_billing', 'can_view')) {?>
+                                
+                                        <li ><a href="#pathology" onclick="load_pathology_data()" data-toggle="tab" aria-expanded="true"><?php echo $this->lang->line('pathology') ?></a></li>
+                                    
+                                <?php 
+                                    } 
+                                } 
+                                
+                                if ($this->module_lib->hasActive('radiology')) {
+                                    if ($this->rbac->hasPrivilege('radiology_billing', 'can_view')) { ?>
+                                
+                                        <li ><a href="#radiology" onclick="load_radiology_data()" data-toggle="tab" aria-expanded="true"><?php echo $this->lang->line('radiology') ?></a></li>
+                                    
+                                <?php 
+                                    } 
+                                } 
+                                
+                                if ($this->module_lib->hasActive('blood_bank')) {
+                                    if ($this->rbac->hasPrivilege('blood_bank_billing', 'can_view')) { ?>
+                                
+                                        <li ><a href="#blood_bank" onclick="load_blood_bank_data()" data-toggle="tab" aria-expanded="true"><?php echo $this->lang->line('blood_bank') ?></a></li>
+                                    
+                                <?php 
+                                    } 
+                                } 
+                                
+                                if ($this->module_lib->hasActive('ambulance')) {
+                                    if ($this->rbac->hasPrivilege('ambulance_billing', 'can_view')) {?>
+                                
+                                        <li ><a href="#ambulance" onclick="load_ambulance_data()" data-toggle="tab" aria-expanded="true"><?php echo $this->lang->line('ambulance') ?></a></li>
+                                    
+                                <?php 
+                                    }
+                                } 
+                                ?>
+                                
                             </ul>
                             <div class="tab-content">
                                 <?php if ($this->rbac->hasPrivilege('opd_billing', 'can_view')) {?>
@@ -709,9 +784,10 @@ $currency_symbol = $this->customlib->getHospitalCurrencyFormat();
                     } else {
                         successMsg(data.message);
                         $("#addrefundPaymentModal").modal('hide');
-                         
-                        }
-                     btn.button('reset');
+                        $('.view_generate_bill').trigger('click');
+                        window.location.reload(); 
+                    }
+                    btn.button('reset');
                 },
                 error: function () {
 

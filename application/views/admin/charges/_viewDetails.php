@@ -1,7 +1,8 @@
  <?php 
-if(!empty($result)){
+    if(!empty($result)){
+    $currency_symbol = $this->customlib->getHospitalCurrencyFormat();
 ?>
-<div class="row">
+    <div class="row">
                     <div class="col-lg-12 col-md-12 col-sm-12">
                         <form id="view" accept-charset="utf-8" method="get" class="ptt10">
                             <div class="table-responsive">
@@ -22,7 +23,7 @@ if(!empty($result)){
                                         <td><span id="descriptions"><?php echo $result->description; ?></span></td>
                                     </tr>
                                     <tr>
-                                        <th ><?php echo $this->lang->line('standard_charge'); ?> ($)</th>
+                                        <th ><?php echo $this->lang->line('standard_charge'); ?> (<?php echo $currency_symbol; ?>)</th>
                                         <td><span id="standard_charges"><?php echo $result->standard_charge; ?></span>
                                         </td>
                                         <th ><?php echo $this->lang->line('tax'); ?> (%)</th>
@@ -41,7 +42,7 @@ if(!empty($result)){
     <thead>
         <tr>
             <th ><?php echo $this->lang->line('schedule_charge_name'); ?></th>
-            <th class="text-right"><?php echo $this->lang->line('charges'); ?> ($)</th>
+            <th class="text-right"><?php echo $this->lang->line('charges'); ?> (<?php echo $currency_symbol; ?>)</th>
         </tr>
     </thead>
     <tbody>

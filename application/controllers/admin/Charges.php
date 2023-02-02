@@ -302,7 +302,7 @@ class Charges extends Admin_Controller
                     'net_amount'         => $this->input->post('amount'),
                     'tax_percentage'     => $this->input->post('charge_tax'),
                     'note'               => $this->input->post('note'),
-                    'date'               => $this->customlib->YYYYMMDDHisTodateFormat($data,$this->customlib->getHospitalTimeFormat())
+                    'date'               => $data
                 );
  
                
@@ -502,7 +502,7 @@ class Charges extends Admin_Controller
                     'tax_percentage'     => $this->input->post('charge_tax'),
                     'net_amount'         => $this->input->post('amount'),
                     'note'               => $this->input->post('note'),
-                    'date'               => $this->customlib->YYYYMMDDHisTodateFormat($data,$this->customlib->getHospitalTimeFormat())
+                    'date'               => $data
                 );
 
                 $json_array = array('status' => 'new_charge', 'error' => '', 'data' => $temp_data);

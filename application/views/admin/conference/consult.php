@@ -331,7 +331,21 @@ if ($disable_option == true) {
     </div>
 </div>
 
+<div id="modal-chkstatus"  class="modal fade" role="dialog">
+    <div class="modal-dialog modal-dialog2 modal-lg">
+    <form id="form-chkstatus" action="" method="POST">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body" id="zoom_details">
 
+            </div>
+        </div>
+    </form>
+    </div>
+</div>
 
 <script type="text/javascript">
 
@@ -703,6 +717,32 @@ $(document).on('change','.module_type',function(){
         show:false
         });
     });
+    
+    $('#modal-chkstatus').on('shown.bs.modal', function (e) {
+            var $modalDiv = $(e.delegateTarget);
+            var id=$(e.relatedTarget).data('id');
+
+            $.ajax({
+                type: "POST",
+                url: base_url + 'admin/zoom_conference/getlivestatus',
+                data: {'id':id},
+                dataType: "JSON",
+                beforeSend: function () {
+                    $('#zoom_details').html("");
+                    $modalDiv.addClass('modal_loading');
+                },
+                success: function (data) {
+                   $('#zoom_details').html(data.page);
+                    $modalDiv.removeClass('modal_loading');
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    $modalDiv.removeClass('modal_loading');
+                },
+                complete: function (data) {
+                    $modalDiv.removeClass('modal_loading');
+                }
+            });
+        })
 </script>
 <script type="text/javascript">
        $('#modal-classteacher-timetable').on('shown.bs.modal', function (e) {

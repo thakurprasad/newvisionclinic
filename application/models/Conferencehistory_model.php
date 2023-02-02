@@ -29,9 +29,9 @@ class Conferencehistory_model extends MY_Model
             $data['total_hit'] = $total_hit;
             $this->db->where('id', $row->id);
             $this->db->update('conferences_history', $data);
-            $message = UPDATE_RECORD_CONSTANT . " On Conferences History id " . $data['id'];
+            $message = UPDATE_RECORD_CONSTANT . " On Conferences History id " . $row->id;
             $action = "Update";
-            $record_id = $data['id'];
+            $record_id = $row->id;
             $this->log($message, $record_id, $action);
         } else {
             $this->db->insert('conferences_history', $data);

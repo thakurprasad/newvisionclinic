@@ -1224,12 +1224,12 @@ class Patient_model extends MY_Model
 
 
         // $field_variable = (empty($field_var_array))? "": ",".implode(',', $field_var_array);
-        // $custom_field_column = (empty($custom_field_column_array))? "": ",".implode(',', $custom_field_column_array);
-        //  if ($doctor_restriction == 'enabled') {
-        //     if ($userdata["role_id"] == 3) {
-        //         $this->datatables->where('visit_details.cons_doctor', $userdata['id']);
-        //     }
-        // }
+        $custom_field_column = (empty($custom_field_column_array))? "": ",".implode(',', $custom_field_column_array);
+         if ($doctor_restriction == 'enabled') {
+            if ($userdata["role_id"] == 3) {
+                $this->datatables->where('visit_details.cons_doctor', $userdata['id']);
+            }
+        }
 
         $custom_field_column_array = array();
         $field_var_array = array();
@@ -2066,7 +2066,8 @@ class Patient_model extends MY_Model
         $i                         = 1;
         $custom_fields             = $this->customfield_model->get_custom_fields('opdrecheckup', 1);
         $custom_field_column_array = array();
-
+        $userdata           = $this->customlib->getUserData();
+         $doctor_restriction = $this->session->userdata['hospitaladmin']['doctor_restriction'];
         $field_var_array = array();
         if (!empty($custom_fields)) {
             foreach ($custom_fields as $custom_fields_key => $custom_fields_value) {
@@ -2077,7 +2078,14 @@ class Patient_model extends MY_Model
                 $i++;
             }
         }
-
+        
+         $custom_field_column = (empty($custom_field_column_array))? "": ",".implode(',', $custom_field_column_array);
+         if ($doctor_restriction == 'enabled') {
+            if ($userdata["role_id"] == 3) {
+                $this->datatables->where('visit_details.cons_doctor', $userdata['id']);
+            }
+        }
+        
         $field_variable = (empty($field_var_array))? "": ",".implode(',', $field_var_array);
         $custom_field_column = (empty($custom_field_column_array))? "": ",".implode(',', $custom_field_column_array);
         $this->datatables
@@ -2338,6 +2346,7 @@ class Patient_model extends MY_Model
         if ($doctor_restriction == 'enabled') {
             if ($userdata["role_id"] == 3) {
                 $this->datatables->where('ipd_details.cons_doctor', $userdata['id']);
+				$this->datatables->or_where('ipd_doctors.consult_doctor', $userdata['id']);
             }
         }
         $field_variable = (empty($field_var_array))? "": ",".implode(',', $field_var_array);
@@ -2345,6 +2354,7 @@ class Patient_model extends MY_Model
         $this->datatables
             ->select('patients.*,bed.name as bed_name,bed_group.name as bedgroup_name, floor.name as floor_name,ipd_details.date,ipd_details.id as ipdid,ipd_details.case_reference_id,ipd_details.credit_limit as ipdcredit_limit,ipd_details.case_type,staff.name,staff.surname,staff.employee_id' . $field_variable)
             ->join('patients', 'patients.id = ipd_details.patient_id', "inner")
+			->join('ipd_doctors', 'ipd_doctors.ipd_id = ipd_details.id', "left")
             ->join('staff', 'staff.id = ipd_details.cons_doctor', "inner")
             ->join('bed', 'ipd_details.bed = bed.id', "left")
             ->join('bed_group', 'ipd_details.bed_group_id = bed_group.id', "left")
@@ -3548,7 +3558,7 @@ class Patient_model extends MY_Model
             ->delete('ipd_doctors');
     }
 
-    public function getDetailsByCaseId($case_id)
+    public function getDetailsByCaseId_old($case_id)
     {
         $patient_details=array();
         $opd_details=array();
@@ -3635,6 +3645,71 @@ class Patient_model extends MY_Model
 
 
      return $patient_details;
+    }
+    
+    public function getDetailsByCaseId($case_id)
+    {
+        $patient_details=array();
+        $opd_details=array();
+        $ipd_details=array();
+        $opd_details=$this->getDetailsopdByCaseId($case_id);
+        $ipd_details=$this->getDetailsipdByCaseId($case_id);
+ 
+       if(!empty($ipd_details)){
+
+            $patient_details['patient_id'] =$ipd_details['patient_id'];
+            $patient_details['patient_name'] =$ipd_details['patient_name'];
+            $patient_details['dob'] =$ipd_details['dob'];
+            $patient_details['age'] =$ipd_details['age'];
+            $patient_details['month'] =$ipd_details['month'];
+            $patient_details['day'] =$ipd_details['day'];
+            $patient_details['image'] =$ipd_details['image'];
+            $patient_details['mobileno'] =$ipd_details['mobileno'];
+            $patient_details['email'] =$ipd_details['email'];
+            $patient_details['gender'] =$ipd_details['gender'];
+            $patient_details['blood_group'] =$ipd_details['blood_group'];
+            $patient_details['address'] =$ipd_details['address'];
+            $patient_details['guardian_name'] =$ipd_details['guardian_name'];
+            $patient_details['is_dead'] =$ipd_details['is_dead'];
+            $patient_details['insurance_id'] =$ipd_details['insurance_id'];
+            $patient_details['insurance_validity'] =$ipd_details['insurance_validity'];
+            $patient_details['discharged'] =$ipd_details['discharged'];
+            $patient_details['date'] =$ipd_details['date'];
+            $patient_details['appointment_date'] =$ipd_details['date'];           
+            $patient_details['ipdid'] =$ipd_details['ipdid'];          
+            $patient_details['credit_limit'] =$ipd_details['credit_limit'];
+            $patient_details['bed_name'] =$ipd_details['bed_name'];
+            $patient_details['bed_id'] =$ipd_details['bed_id'];
+            $patient_details['bedgroup_name'] =$ipd_details['bedgroup_name'];
+            $patient_details['floor_name'] =$ipd_details['floor_name'];
+
+       }       
+
+       if(!empty($opd_details)){
+    
+            $patient_details['patient_id'] =$opd_details['patient_id'];
+            $patient_details['patient_name'] =$opd_details['patient_name'];
+            $patient_details['dob'] =$opd_details['dob'];
+            $patient_details['age'] =$opd_details['age'];
+            $patient_details['month'] =$opd_details['month'];
+            $patient_details['day'] =$opd_details['day'];
+            $patient_details['image'] =$opd_details['image'];
+            $patient_details['mobileno'] =$opd_details['mobileno'];
+            $patient_details['email'] =$opd_details['email'];
+            $patient_details['gender'] =$opd_details['gender'];
+            $patient_details['blood_group'] =$opd_details['blood_group'];
+            $patient_details['address'] =$opd_details['address'];
+            $patient_details['guardian_name'] =$opd_details['guardian_name'];
+            $patient_details['is_dead'] =$opd_details['is_dead'];
+            $patient_details['insurance_id'] =$opd_details['insurance_id'];
+            $patient_details['insurance_validity'] =$opd_details['insurance_validity'];
+            $patient_details['discharged'] =$opd_details['discharged'];
+            $patient_details['date'] =$opd_details['appointment_date'];
+            $patient_details['appointment_date'] =$opd_details['appointment_date'];      
+            $patient_details['opdid'] =$opd_details['opdid'];     
+
+       }
+       return $patient_details;
     }
 
     public function getDetailsopdByCaseId($case_id)

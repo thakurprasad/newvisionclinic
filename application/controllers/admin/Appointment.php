@@ -44,8 +44,6 @@ class Appointment extends Admin_Controller
         $data['app_data']              = $app_data;
         $doctors                       = $this->staff_model->getStaffbyrole(3);
         $data["doctors"]               = $doctors;
-        $patients                      = $this->patient_model->getPatientListall();
-        $data["patients"]              = $patients;
         $data["appointment_status"]    = $this->appointment_status;
         $data["yesno_condition"]       = $this->yesno_condition;
         $userdata                      = $this->customlib->getUserData();
@@ -202,7 +200,7 @@ class Appointment extends Admin_Controller
             );
             
             $visit_details = array(
-                'appointment_date'  => date("Y-m-d H:i:s"),
+                'appointment_date'  => $appointment_details['date'],
                 'opd_details_id'    => 0,
                 'cons_doctor'       => $appointment_details['doctor'],
                 'generated_by'      => $this->customlib->getLoggedInUserID(),
@@ -225,10 +223,10 @@ class Appointment extends Admin_Controller
                 'note'            => null,
                 'tax'             => $charges['percentage'],
             );
-            $opd_visit_id = $this->appointment_model->moveToOpd($opd_details, $visit_details, $charge, $appointment_id,'');
-            /* OPD Insert Code*/           
-            
-            $visit_detail=$this->patient_model->getVisitDetailByid($opd_visit_id);
+            $opd_visit_details = $this->appointment_model->moveToOpd($opd_details, $visit_details, $charge, $appointment_id);
+
+            /* OPD Insert Code*/
+            $visit_detail=$this->patient_model->getVisitDetailByid($opd_visit_details['visit_details_id']);
             $setting_result   = $this->setting_model->getzoomsetting();
             $opdduration      = $setting_result->opd_duration;
             if ($consult == 'yes') {
@@ -245,7 +243,7 @@ class Appointment extends Admin_Controller
                     'visit_details_id' => $visit_detail->id,
                     'title'            => $title,
                     'date'             => $date_appoint,
-                    'duration'         => 60,
+                    'duration'         => $opdduration,
                     'created_id'       => $this->customlib->getStaffID(),
                     'password'         => random_string(),
                     'api_type'         => $api_type,
@@ -323,7 +321,7 @@ class Appointment extends Admin_Controller
         $result["date"]                = $this->customlib->YYYYMMDDHisTodateFormat($result['date'], $this->time_format);
         $result['custom_fields_value'] = display_custom_fields('appointment', $id);
         $cutom_fields_data             = get_custom_table_values($id, 'appointment');
-        $result['field_data']          = $cutom_fields_data;
+        $data['field_data']          = $cutom_fields_data;
         $result['patients_gender']     = $result['patients_gender'];
         $result['transaction_id']      = $this->customlib->getSessionPrefixByType('transaction_id').$result['transaction_id'];
         $data['appointment_id']        = $id ;
@@ -598,6 +596,7 @@ class Appointment extends Admin_Controller
     {
         $id     = $this->input->get("appointment_id");
         $result = $this->appointment_model->getDetailsAppointment($id);
+       //  print_r($result);die;
         
 
         if ($result['appointment_status'] == 'approved') {
@@ -1085,7 +1084,7 @@ This Function is Used to move patient from appointment to other module
             );
             $consult      = $this->input->post('live_consult');
             $visit_details = array(
-                'appointment_date'  => date("Y-m-d H:i:s"),
+                'appointment_date'  => $appointment_details['date'],
                 'opd_details_id'    => 0,
                 'cons_doctor'       => $appointment_details['doctor'],
                 'generated_by'      => $this->customlib->getLoggedInUserID(),
@@ -1111,12 +1110,12 @@ This Function is Used to move patient from appointment to other module
             
             $doctor_fees   =    $this->input->post('doctor_fees');
 
-            $opd_visit_id = $this->appointment_model->moveToOpd($opd_details, $visit_details, $charge, $appointment_id, $doctor_fees);            
+            $opd_visit_details = $this->appointment_model->moveToOpd($opd_details, $visit_details, $charge, $appointment_id, $doctor_fees);            
             $this->appointment_model->updateappointmentpayment($appointment_id, $doctor_fees );
 
             /* OPD Insert Code*/          
             
-            $visit_detail=$this->patient_model->getVisitDetailByid($opd_visit_id);
+            $visit_detail=$this->patient_model->getVisitDetailByid($opd_visit_details['visit_details_id']);
             $setting_result   = $this->setting_model->getzoomsetting();
             $opdduration      = $setting_result->opd_duration;
             if ($consult == 'yes') {
@@ -1132,8 +1131,8 @@ This Function is Used to move patient from appointment to other module
                     'staff_id'         => $appointment_details['doctor'],
                     'visit_details_id' => $visit_detail->id,
                     'title'            => $title,
-                    'date'             => $date_appoint,
-                    'duration'         => 60,
+                    'date'             => $this->customlib->dateFormatToYYYYMMDDHis($this->input->post('appointment_date'), $this->time_format), 
+                    'duration'         => $opdduration,
                     'created_id'       => $this->customlib->getStaffID(),
                     'password'         => random_string(),
                     'api_type'         => $api_type,

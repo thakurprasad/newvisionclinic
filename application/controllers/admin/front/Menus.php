@@ -207,7 +207,7 @@ class Menus extends Admin_Controller
 
     public function updateMenu()
     {
-        if (!$this->rbac->hasPrivilege('menus', 'can_edit')) {
+        if (!$this->rbac->hasPrivilege('menus', 'can_add')) {
             access_denied();
         }
         $order  = ($this->input->post('order'));

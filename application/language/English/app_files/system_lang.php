@@ -2115,6 +2115,8 @@ $lang["add_credential"] = "Add Credential";
 $lang["global"]			= "Global";
 $lang["what_is_new_in"] = "What\"s new in";
 $lang["android_app_purchase_code_already_registered"] = "Android App Purchase Code already registered";
+
+
 # added by T.Prasad 
 $lang['nationality'] = 'Nationality';
 $lang['passport_no'] = 'Passport No';

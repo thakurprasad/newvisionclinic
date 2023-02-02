@@ -88,6 +88,17 @@ $currency_symbol = $this->customlib->getHospitalCurrencyFormat();
                                 <th ><?php echo $this->lang->line('message'); ?></th>
                                 <td colspan="4"><?php echo $result['message']?></td>
                             </tr>
+                            
+                            <?php   if (!empty($field_data)) {
+                                foreach ($field_data as $fields_key => $fields_value) {                                    
+                                    ?>
+                            <tr>
+                                    <th><?php echo $fields_value->name .": "; ?> </th> 
+                                    <td colspan="4"><?php echo $fields_value->field_value; ?></td>
+                            </tr>
+                                <?php }
+                            }?>
+                            
                         </table>
                     </div>
                 </div>

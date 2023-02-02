@@ -4363,4 +4363,6 @@ fieldset.floormain a{
     white-space: nowrap;
     text-overflow: ellipsis;
 }
-
+/*.tablenowrap{min-width: 1200px; overflow: scroll;}*/
+.tablenowrap td:last-child.dt-body-right{white-space: inherit; width: 20%; text-align: left !important;}
+.w-100-px{width: 100px;}

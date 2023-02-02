@@ -446,9 +446,9 @@ class Welcome extends Front_Controller
                 $time         = date("H:i:s", strtotime($slot));
                 $patient_id   = $this->session->userdata("patient")["patient_id"];
 
-                $sender_details = array('patient_name' => $patient_name, 'doctor' => $doctor, 'date' => $date, 'time' => $time, 'contact_no' => $mobileno, 'email' => $email,'patient_id'=>$patient_id,'appointment_id'=>$insert_id);
+                //$sender_details = array('patient_name' => $patient_name, 'doctor' => $doctor, 'date' => $date, 'time' => $time, 'contact_no' => $mobileno, 'email' => $email,'patient_id'=>$patient_id,'appointment_id'=>$insert_id);
                 $this->session->set_flashdata("success_msg",$this->lang->line("success_message"));
-                $this->mailsmsconf->mailsms('appointment_approved', $sender_details);
+                //$this->mailsmsconf->mailsms('appointment_approved', $sender_details);
                 $json_array = array('status' => '1', 'msg' => "Appointment Booked");
                 echo json_encode($json_array);
             } else {
@@ -508,7 +508,7 @@ class Welcome extends Front_Controller
 
                 /* insert custom field end*/
                 $patient_id = $this->session->userdata("patient")["patient_id"];
-                $sender_details = array('patient_name' => $patient_name, 'doctor' => $doctor, 'date' => $date, 'time' => $time, 'contact_no' => $mobileno, 'email' => $email,'patient_id'=>$patient_id,'appointment_id'=>$insert_id);
+                //$sender_details = array('patient_name' => $patient_name, 'doctor' => $doctor, 'date' => $date, 'time' => $time, 'contact_no' => $mobileno, 'email' => $email,'patient_id'=>$patient_id,'appointment_id'=>$insert_id);
                 $date_appoint = $this->customlib->dateFormatToYYYYMMDDHis($date." ".$time, $this->customlib->getHospitalTimeFormat());
                 $doctor_details = $this->notificationsetting_model->getstaffDetails($this->input->post('doctor'));
                 $event_data     = array(
@@ -521,7 +521,7 @@ class Welcome extends Front_Controller
 
                 $this->system_notification->send_system_notification('notification_appointment_created', $event_data);
 
-                $this->mailsmsconf->mailsms('appointment_approved', $sender_details);
+                //$this->mailsmsconf->mailsms('appointment_approved', $sender_details);
                 $this->session->set_flashdata("success_msg",$this->lang->line("success_message"));
                 $json_array = array('status' => '1', 'msg' => "Appointment Booked");
                 echo json_encode($json_array);

@@ -1585,21 +1585,18 @@ class Pathology extends Admin_Controller
         $reportdata    = json_decode($reportdata);
         $dt_data       = array();
         $total_balance = 0;
-        $total_paid    = 0;
+       
         $total_charge  = 0;
         if (!empty($reportdata->data)) {
+             
             foreach ($reportdata->data as $key => $value) {
-
-                $total_paid += $value->paid_amount;
-                $total_charge += $value->net_amount;
+               
+                $total_charge += $value->standard_charge;
                 if (!empty($value->patient_id)) {
                     $patient_id = " (" . $value->patient_id . ")";
                 } else {
                     $patient_id = "";
-                }
-
-                $balance_amount = ($value->net_amount) - ($value->paid_amount);
-                $total_balance += $balance_amount;
+                }                
 
                 $row   = array();
                 $row[] = $this->customlib->getSessionPrefixByType($value->module_no) . $value->module_id;
@@ -1621,9 +1618,9 @@ class Pathology extends Admin_Controller
                     }
                 }
                 //====================
-                $row[] = $value->net_amount;
-                $row[] = $value->paid_amount;
-                $row[] = number_format($balance_amount, 2);
+                $row[] = $value->standard_charge;
+                 
+                
                 $dt_data[] = $row;
             }
 
@@ -1634,10 +1631,9 @@ class Pathology extends Admin_Controller
             $footer_row[] = "";
             $footer_row[] = "";
             $footer_row[] = "";
+            $footer_row[] = "";
             $footer_row[] = "<b>" . $this->lang->line('total_amount') . "</b>" . ':';
-            $footer_row[] = "<b>" . (number_format($total_charge, 2, '.', '')) . "<br/>";
-            $footer_row[] = "<b>" . (number_format($total_paid, 2, '.', '')) . "<br/>";
-            $footer_row[] = "<b>" . (number_format($total_balance, 2, '.', '')) . "<br/>";
+            $footer_row[] = "<b>" . (number_format($total_charge, 2, '.', '')) . "<br/>"; 
             $dt_data[]    = $footer_row;
         }
 
@@ -1937,7 +1933,7 @@ class Pathology extends Admin_Controller
             $reportdetails                = $this->pathology_model->getPathologyReportByID($this->input->post('pathology_report_id'));
             $test_detail                  = $this->notificationsetting_model->getPathologyBillReportByID($this->input->post('pathology_bill_id'));
             $approved_by                  = $this->notificationsetting_model->getstaffDetails($this->input->post('approved_by'));
-            $doctor_details               = $this->notificationsetting_model->getstaffDetails($test_detail['doctor_id']);
+            // $doctor_details               = $this->notificationsetting_model->getstaffDetails($test_detail['doctor_id']);
             $sample_collected_person_name = $this->notificationsetting_model->getstaffDetails($this->input->post('collected_id'));
 
             $event_data = array(
@@ -1946,7 +1942,7 @@ class Pathology extends Admin_Controller
                 'bill_no'                      => $this->customlib->getSessionPrefixByType('pathology_billing') . $reportdetails['pathology_bill_id'],
                 'collected_date'               => $this->input->post('collected_date'),
                 'test_name'                    => $test_detail['test_name'],
-                'doctor_id'                    => $this->input->post('collected_id'),
+                'doctor_id'                    => $this->input->post('approved_by'),
                 'doctor_name'                  => $this->input->post('collected_by'),
                 'sample_collected_person_name' => $this->input->post('collected_by'),
                 'pathology_center'             => $this->input->post('pathalogy_center'),

@@ -1787,7 +1787,8 @@ class Customlib
     return $this->getHospitalCurrencyFormat().$payment."/".$this->getHospitalCurrencyFormat().$bill;
    }
 
-    public function getNationality()
+
+   public function getNationality()
     {
         $DATA =[
                 'Afghan',
@@ -2043,5 +2044,6 @@ class Customlib
         
         return $DATA;
     }
+   
    
 }

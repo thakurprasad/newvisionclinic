@@ -1,4 +1,4 @@
- <?php
+<?php
 if (!defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
@@ -11,24 +11,40 @@ class Checkout extends Patient_Controller
     public function __construct()
     {
         parent::__construct();
-        
+        $this->setting = $this->setting_model->get()[0];
         $this->pay_method = $this->paymentsetting_model->getActiveMethod();
         $this->load->library('system_notification');
-        $this->load->model(array('appointment_model','transaction_model','charge_model','staff_model'));
+         $this->load->library('mailsmsconf');
+        $this->load->model(array('appointment_model','transaction_model','charge_model','staff_model','onlineappointment_model'));
     }
 
     public function index($appointment_id)
     {
         $appointment_id = $appointment_id;
         $status = $this->customlib->isAppointmentBooked($appointment_id);
-        if($status == 1){
-            
+        if($status){
             $this->appointment_model->deleteAppointment($appointment_id);
             echo "Slot Already Booked";
             return;
         }else{
-           
             $this->session->set_userdata("appointment_id",$appointment_id);
+
+        $appointment_data = $this->onlineappointment_model->getAppointmentDetails($appointment_id);
+        $data['setting'] = $this->setting;
+        $charges_array = $this->charge_model->getChargeDetailsById($appointment_data->charge_id);
+        $tax=0;
+        $standard_charge=0;
+        if(isset($charges_array->standard_charge)){
+            $charge = $charges_array->standard_charge + ($charges_array->standard_charge*$charges_array->percentage/100);
+            $tax=($charges_array->standard_charge*$charges_array->percentage/100);
+            $standard_charge=$charges_array->standard_charge;
+        }else{
+            $charge=0;
+            $tax=0;
+            $standard_charge=0;
+        }
+        $this->session->set_userdata('payment_amount',$charge);
+        $this->session->set_userdata('charge_id',$appointment_data->charge_id);
             $data = array();
             if (!empty($this->pay_method)) {
                 if ($this->pay_method->payment_type == "payu") {
@@ -63,18 +79,32 @@ class Checkout extends Patient_Controller
                     redirect(base_url("patient/onlineappointment/sslcommerz"));
                 }elseif ($this->pay_method->payment_type == "walkingm") {
                     redirect(base_url("patient/onlineappointment/walkingm"));
+                }elseif($this->pay_method->payment_type == "mollie"){
+                    redirect(base_url("patient/onlineappointment/mollie"));
+                }elseif($this->pay_method->payment_type == "cashfree"){
+                    redirect(base_url("patient/onlineappointment/cashfree"));
+                }elseif($this->pay_method->payment_type == "payfast"){
+                    redirect(base_url("patient/onlineappointment/payfast"));
+                }elseif($this->pay_method->payment_type == "toyyibpay"){
+                    redirect(base_url("patient/onlineappointment/toyyibpay"));
+                }elseif($this->pay_method->payment_type == "twocheckout"){
+                    redirect(base_url("patient/onlineappointment/twocheckout"));
+                }elseif($this->pay_method->payment_type == "skrill"){
+                    redirect(base_url("patient/onlineappointment/skrill"));
                 }
             }
-        }
+        } 
     }
     public function successinvoice($appointment_id){
         $appointment_details = $this->appointment_model->getDetails($appointment_id);
         $transaction_data = $this->transaction_model->getTransactionByAppointmentId($appointment_id);
-        
         $appointment_payment = $this->appointment_model->getPaymentByAppointmentId($appointment_id);
-        
         $charges = $this->charge_model->getChargeByChargeId($appointment_payment->charge_id);  
         $apply_charge = $charges['standard_charge'] + ($charges['standard_charge']*($charges['percentage']/100));
+
+
+
+
         $opd_details = array(
             'patient_id'   => $appointment_details['patient_id'],
         );
@@ -100,7 +130,52 @@ class Checkout extends Patient_Controller
             'note'            => $staff_name,               
             'tax'             => $charges['percentage'],
         );
-        $status = $this->appointment_model->moveToOpd($opd_details,$visit_details,$charge,$appointment_id,$appointment_payment->paid_amount);
+        $visit_details = $this->appointment_model->moveToOpd($opd_details,$visit_details,$charge,$appointment_id);
+
+if($visit_details){
+
+    // ===============
+            $setting_result  = $this->setting_model->getzoomsetting();
+            $opdduration     = $setting_result->opd_duration;
+
+
+    if ($appointment_details['live_consult'] = 'yes') {
+                $api_type = 'global';
+                $params   = array(
+                    'zoom_api_key'    => "",
+                    'zoom_api_secret' => "",
+                );
+                $this->load->library('zoom_api', $params);
+                $insert_array = array(
+                    'staff_id'         => $appointment_details['doctor'],
+                    'visit_details_id' => $visit_details['visit_details_id'],
+                    'title'            => 'Online consult for Checkup ID ' . $visit_details['opd_id'],
+                    'date'             => $appointment_details['date'],
+                    'duration'         => $opdduration,
+                    'created_id'       => $this->customlib->getStaffID(),
+                    'password'         => '',
+                    'api_type'         => $api_type,
+                    'host_video'       => 1,
+                    'client_video'     => 1,
+                    'purpose'          => 'consult',
+                    'timezone'         => $this->customlib->getTimeZone(),
+                );
+                $response = $this->zoom_api->createAMeeting($insert_array);
+
+                if (!empty($response)) {
+                    if (isset($response->id)) {
+                        $insert_array['return_response'] = json_encode($response);
+                        $conferenceid   = $this->conference_model->add($insert_array);
+                        $sender_details = array('patient_id' =>$appointment_details['patient_id'], 'conference_id' => $conferenceid, 'contact_no' => $appointment_details['mobileno'], 'email' => $this->input->post('email'));
+
+                        $this->mailsmsconf->mailsms('live_consult', $sender_details);
+                    }
+                }
+            }
+
+        //=====================
+}
+
 
         $doctor_details =$this->notificationsetting_model->getstaffDetails($appointment_details['doctor']);
         $event_data=array(

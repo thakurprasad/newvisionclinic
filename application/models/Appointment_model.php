@@ -83,7 +83,7 @@ class Appointment_model extends MY_Model
         $field_variable      = (empty($field_var_array)) ? "" : "," . implode(',', $field_var_array);
         $custom_field_column = (empty($custom_field_column_array)) ? "" : "," . implode(',', $custom_field_column_array);
         $this->datatables
-            ->select('appointment.*,appointment_payment.paid_amount,staff.id as sid,staff.name,patients.id as pid, patients.patient_name as patient_name,patients.gender as gender, patients.email as email, patients.mobileno as mobileno,staff.surname,staff.employee_id,appoint_priority.appoint_priority as priorityname' . $field_variable)
+            ->select('appointment.appointment_status,appointment.id,appointment.date,appointment.source,appointment_payment.paid_amount,staff.id as sid,staff.name,patients.id as pid, patients.patient_name as patient_name,patients.gender as gender, patients.email as email, patients.mobileno as mobileno,staff.surname,staff.employee_id,appoint_priority.appoint_priority as priorityname' . $field_variable)
             ->join('appointment_payment', "appointment_payment.appointment_id=appointment.id")
             ->join('staff', 'appointment.doctor = staff.id', "inner")
             ->join('patients', 'appointment.patient_id = patients.id', "left")
@@ -407,7 +407,8 @@ class Appointment_model extends MY_Model
         }
     }
 
-    public function moveToOpd($opd_details, $visit_details, $charges, $appointment_id, $doctor_fees)
+
+    public function moveToOpd($opd_details, $visit_details, $charges, $appointment_id)
     {
         $this->db->trans_start();
         $this->db->trans_strict(false);
@@ -422,11 +423,10 @@ class Appointment_model extends MY_Model
         $visit_details['opd_details_id']    = $opd_id;
         $visit_details['patient_charge_id'] = $patient_charge_id;
         $this->db->insert('visit_details', $visit_details);
-        $visit_details_id                      = $this->db->insert_id();        
+        $visit_details_id                      = $this->db->insert_id();
         $transaction_data['case_reference_id'] = $case_id;
         $transaction_data['opd_id']            = $opd_id;
-        $transaction_data['amount']            = $doctor_fees;
-        $this->db->update("transactions", $transaction_data, array("appointment_id" => $appointment_id));        
+        $this->db->update("transactions", $transaction_data, array("appointment_id" => $appointment_id));
         $appointment_data['case_reference_id'] = $case_id;
         $appointment_data['visit_details_id']  = $visit_details_id;
         $this->db->update("appointment", $appointment_data, array("id" => $appointment_id));
@@ -436,9 +436,10 @@ class Appointment_model extends MY_Model
             return false;
         } else {
             $this->db->trans_commit();
-            return $visit_details_id;
+            return ['opd_id'=>$opd_id,'visit_details_id'=>$visit_details_id];
         }
     }
+
 
     public function getPaymentByAppointmentId($appointment_id)
     {

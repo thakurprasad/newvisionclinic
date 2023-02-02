@@ -60,11 +60,11 @@ if(!empty($result)){
                             echo $this->lang->line('credit_limit') . " (" . $currency_symbol . ")";
                             ;
                             ?></th>
-                        <td class="bozerotop"><?php echo $result['credit_limit']; ?>
+                        <td class="bozerotop"><?php if(isset($result['credit_limit'])){ echo $result['credit_limit']; } ?>
                         </td>
                     </tr>
                     <?php 
-                    if($result['ipdid']!='' && $result['ipdid']!=0){?>
+                    if(isset($result['ipdid']) && $result['ipdid']!='' && $result['ipdid']!=0){?>
                     <tr>
                       
                         <th class="bozerotop"><?php echo $this->lang->line('ipd_no'); ?></th>
@@ -92,7 +92,7 @@ if(!empty($result)){
                         </td>
                     </tr>
                 <?php } ?>
-                 <?php if($result['ipdid'] !='' && $result['ipdid'] !=0){?>
+                 <?php if(isset($result['ipdid']) && $result['ipdid'] !='' && $result['ipdid'] !=0){?>
                     <tr>
                         <th class="bozerotop"><?php
                             echo $this->lang->line('admission_date');

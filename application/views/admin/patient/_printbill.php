@@ -91,7 +91,7 @@ $currency_symbol = $this->customlib->getHospitalCurrencyFormat();
     <hr style="height: 1px; clear: both;margin-bottom: 10px; margin-top: 10px" />
                     <h4 class="font-bold"><?php echo $this->lang->line("payment_details"); ?></h4>
                     <?php 
-if (!empty($charge)) {
+if (!empty($charge)) { 
    ?>
 
                     <div class="row">
@@ -119,7 +119,7 @@ if (!empty($charge)) {
                                       $tax=(($charge->apply_charge*$charge->tax)/100);  
                                     }else{ $tax=0; 
                                     } echo amountFormat($tax)." (".$charge->tax."%)";?></td>
-                                   <td class="text-right"><?php echo $charge->amount;?></td>
+                                   <td class="text-right"><?php echo $charge->apply_charge;?></td>
                                 </tr>
                                 <tr>
                                    
@@ -137,7 +137,7 @@ if (!empty($charge)) {
                                    }
                                   
                                    $total = ($charge->amount);
-                                   echo $currency_symbol.amountFormat($total+$tax_amt); ?></strong></td>
+                                   echo $currency_symbol.amountFormat($tax_amt); ?></strong></td>
                                 </tr>
                                 <tr>  
                                   
@@ -159,7 +159,7 @@ if (!empty($charge)) {
                                    <td class="text-right no-line"><strong><?php 
                                 $amount_paid=(!isset($transaction) || empty($transaction)) ? 0:  $transaction->amount;
                                    
-                                   echo $currency_symbol.amountFormat(($total+$tax_amt)-$amount_paid); ?></strong></td>
+                                   echo $currency_symbol.amountFormat(($total)-$amount_paid); ?></strong></td>
                                 </tr>
 
                              </tbody>

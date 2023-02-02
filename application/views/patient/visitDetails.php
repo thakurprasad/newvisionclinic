@@ -758,7 +758,7 @@ $total_payment=0;
                                                     {
                                                         foreach ($fields as $fields_key => $fields_value)
                                                         { 
-                                                            $display_field = $visit[$fields_value->name];
+                                                                $display_field = $visit[$fields_value->name];
                                                               
                                                                     ?>
                                                                 <td>
@@ -912,13 +912,11 @@ $total_payment=0;
                                                                 }
                                                             ?></td>
                                                            <td class="text-right"><?php echo $payment["amount"] ?></td> 
-                                                           <td class="text-right">
-                                                            <?php         if ($payment['payment_mode'] == "Cheque" && $payment['attachment'] != "")  {  ?>
+                                                           <td class="text-right"><?php         if ($payment['payment_mode'] == "Cheque" && $payment['attachment'] != "")  {  ?>
                                                                  <a href='<?php echo site_url('patient/dashboard/downloadreceipt/'.$payment['id']);?>' class='btn btn-default btn-xs'  title='<?php echo $this->lang->line('download'); ?>'><i class='fa fa-download'></i></a>
                                                                 <?php
                                                             }
-                                                                     ?>
-                                                            <a href="javascript:void(0);" class="btn btn-default btn-xs print_trans" data-toggle="tooltip" title="" data-loading-text="<i class='fa fa-circle-o-notch fa-spi'></i>" data-module-type="opd" data-record-id="<?php echo $payment['id']; ?>"  data-original-title="<?php echo $this->lang->line('print'); ?>"><i class="fa fa-print"></i></td>
+                                                                     ?><a href="javascript:void(0);" class="btn btn-default btn-xs print_trans" data-toggle="tooltip" title="" data-loading-text="<i class='fa fa-circle-o-notch fa-spi'></i>" data-module-type="opd" data-record-id="<?php echo $payment['id']; ?>"  data-original-title="<?php echo $this->lang->line('print'); ?>"><i class="fa fa-print"></i></td>
                                                         </tr>
                                                 <?php }?>
                                                 </tbody>
@@ -1209,11 +1207,6 @@ echo $this->customlib->YYYYMMDDTodateFormat($value['timeline_date']); ?>
                             <div class="box-tab-header">
                                 <h3 class="box-tab-title"><?php echo $this->lang->line('live_consultation'); ?></h3>
                             </div>
-                            <?php if (empty($visitconferences)) {
-    ?>
-    <div class="alert alert-danger"><?php echo $this->lang->line('no_record_found'); ?></div>
-                                        <?php
-} else { ?>
                             <div class="table-responsive">
                                  <table class="table table-striped table-bordered table-hover example">
                                     <thead>
@@ -1226,10 +1219,12 @@ echo $this->customlib->YYYYMMDDTodateFormat($value['timeline_date']); ?>
                                         <th class="text-right noExport"><?php echo $this->lang->line('action'); ?></th>
                                     </thead>
                                     <tbody>
-                                     
+                                        <?php
+if (empty($visitconferences)) {
+    ?>
 
                                         <?php
-
+} else {
     foreach ($visitconferences as $conference_key => $conference_value) {
 
         $return_response = json_decode($conference_value->return_response);
@@ -1258,20 +1253,32 @@ if ($conference_value->description == "") {
                                                 <?php echo date($this->customlib->getHospitalDateFormat(true, true), strtotime($conference_value->date)) ?>
 
                                                 </td>
-                                                 <td class="mailbox-name">
+                                                <td class="mailbox-name">
 
                                                     <?php
 
         $name = ($conference_value->create_by_surname == "") ? $conference_value->create_by_name : $conference_value->create_by_name . " " . $conference_value->create_by_surname;
+
        
         if ($name == 'Super Admin') {
             echo $name;
-            # code...
+         
         } else {
-            echo $name . " (" . $conference_value->create_by_role_name . ": " . $conference_value->for_create_employee_id . ")";
+
+            if(IsNullOrEmptyString($conference_value->create_by_name)){
+              
+              echo $this->lang->line('patient');
+
+            }else{
+                echo $name . " (" . $conference_value->create_by_role_name . ": " . $conference_value->create_by_employee_id . ")"; 
+            }
+
+           
         }
 
-        ?></td>
+        ?>
+            
+        </td>
 
                                                 <td class="mailbox-name">
                                                     <?php
@@ -1452,11 +1459,13 @@ if ($conference_value->status == 0) {
     <div class="modal-dialog">
         <!-- Modal content-->
         <div class="modal-content">
+             <form id="payment_form" class="form-horizontal " method="post" > 
+            <!-- <form id="editpaymentform" accept-charset="utf-8" method="post"> -->
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title"><?php echo $this->lang->line('make_payment') ?></h4>
             </div>
-            <form id="payment_form" class="form-horizontal modal_payment" method="POST">
+           
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="amount" class="col-sm-3 control-label"><?php echo $this->lang->line('payment_amount'); ?> (<?php echo $currency_symbol; ?>)</label>
@@ -1469,10 +1478,12 @@ if ($conference_value->status == 0) {
                         </div>
                     </div>
                 </div>
-            </form>
+           
                 <div class="modal-footer">
-                    <button id="pay_button" class="btn btn-info pull-right"><?php echo $this->lang->line('add'); ?></button>
+                    <button id="pay_button" type="submit" class="btn btn-info pull-right"><?php echo $this->lang->line('add'); ?></button>
                 </div>
+
+                 </form>
         </div>
     </div>
 </div>
@@ -2032,29 +2043,6 @@ if ($conference_value->status == 0) {
 
     });
 
-    $('#pay_button').click(function(){
-        var formdata = new FormData($('#payment_form')[0]);
-        $.ajax({
-            url: base_url+'patient/pay/checkvalidate',
-            type: "POST",
-            data: formdata,
-            dataType: 'json',
-            cache : false,
-            processData: false,
-            contentType: false,
-            success: function (data) {
-                if (data.status == "fail") {
-                    var message = "";
-                    $.each(data.error, function (index, value) {
-                        message += value;
-                    });
-                    errorMsg(message);
-                } else {
-                    window.location.replace(base_url+'patient/pay');
-                }
-            }
-        })
-    })
 
     $(document).on('click','.viewot',function(){
         var $this = $(this);
@@ -2111,4 +2099,39 @@ if ($conference_value->status == 0) {
              }
       });
   });
+</script>
+<script>
+   $(document).ready(function () {
+       
+         $("#payment_form").on('submit', (function (e) {
+           e.preventDefault();
+            var formdata = new FormData($('#payment_form')[0]);
+            var form = $('#payment_form')[0]; 
+            var formData = new FormData(form);
+
+        $.ajax({
+            url: base_url+'patient/pay/checkvalidate',
+            type: "POST",
+            data: new FormData(this),
+            dataType: 'json',
+            contentType: false,
+            cache: false,
+            processData: false,
+            success: function (data) {
+                if (data.status == "fail") {
+                    var message = "";
+                    $.each(data.error, function (index, value) {
+                        message += value;
+                    });
+                    errorMsg(message);
+                } else {
+                    window.location.replace(base_url+'patient/pay');
+                }
+            }
+        });
+     }));
+    });
+
+
+   
 </script>

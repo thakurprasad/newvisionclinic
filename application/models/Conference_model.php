@@ -285,15 +285,16 @@ class Conference_model extends MY_Model
         return $query->result();
     }
 
+  
     public function getconfrencebyvisitid($visitid )
     {
-         $this->db->select('conferences.*,for_create.name as `create_for_name`,for_create.surname as `create_for_surname,create_by.name as `create_by_name`,create_by.surname as `create_by_surname,for_create.employee_id as `for_create_employee_id`,for_create_role.name as `for_create_role_name`,patients.patient_name,patients.id as `patientid`')->from('conferences');
+         $this->db->select('conferences.*,for_create.name as `create_for_name`,for_create.surname as `create_for_surname,create_by.name as `create_by_name`,create_by.surname as `create_by_surname,for_create.employee_id as `for_create_employee_id`,for_create_role.name as `for_create_role_name`,create_by_role.name as `create_by_role_name`,create_by.employee_id as `create_by_employee_id`,patients.patient_name,patients.id as `patientid`')->from('conferences');
         $this->db->join('staff as for_create', 'for_create.id = conferences.staff_id');
-        $this->db->join('staff as create_by', 'create_by.id = conferences.created_id');
-        $this->db->join('staff_roles', 'staff_roles.id = for_create.id');
+        $this->db->join('staff as create_by', 'create_by.id = conferences.created_id','left');
+        $this->db->join('staff_roles', 'staff_roles.staff_id = for_create.id');
         $this->db->join('roles as `for_create_role`', 'for_create_role.id = staff_roles.role_id');
-        $this->db->join('staff_roles as staff_create_by_roles', 'staff_create_by_roles.id = create_by.id');
-        $this->db->join('roles as `create_by_role`', 'create_by_role.id = staff_create_by_roles.role_id');
+        $this->db->join('staff_roles as staff_create_by_roles', 'staff_create_by_roles.staff_id = create_by.id','left');
+        $this->db->join('roles as `create_by_role`', 'create_by_role.id = staff_create_by_roles.role_id','left');
         $this->db->join('visit_details', 'visit_details.id = conferences.visit_details_id','left');
         $this->db->join('opd_details', 'opd_details.id = visit_details.opd_details_id','left');
         $this->db->join('patients', 'patients.id = opd_details.patient_id','left');
@@ -309,7 +310,7 @@ class Conference_model extends MY_Model
         $this->db->select('conferences.*,for_create.name as `create_for_name`,for_create.surname as `create_for_surname,create_by.name as `create_by_name`,create_by.surname as `create_by_surname,for_create.employee_id as `for_create_employee_id`,for_create_role.name as `for_create_role_name`,patients.patient_name')->from('conferences');
         $this->db->join('staff as for_create', 'for_create.id = conferences.staff_id');
         $this->db->join('staff as create_by', 'create_by.id = conferences.created_id');
-        $this->db->join('staff_roles', 'staff_roles.id = for_create.id');
+        $this->db->join('staff_roles', 'staff_roles.staff_id = for_create.id');
         $this->db->join('roles as `for_create_role`', 'for_create_role.id = staff_roles.role_id');
         $this->db->join('staff_roles as staff_create_by_roles', 'staff_create_by_roles.id = create_by.id');
         $this->db->join('roles as `create_by_role`', 'create_by_role.id = staff_create_by_roles.role_id');
@@ -328,7 +329,7 @@ class Conference_model extends MY_Model
         $this->db->join('patients', 'patients.id = conferences.patient_id');
         $this->db->join('staff as for_create', 'for_create.id = conferences.staff_id');
         $this->db->join('staff as create_by', 'create_by.id = conferences.created_id');
-        $this->db->join('staff_roles', 'staff_roles.id = for_create.id');
+        $this->db->join('staff_roles', 'staff_roles.staff_id = for_create.id');
         $this->db->join('roles as `for_create_role`', 'for_create_role.id = staff_roles.role_id');
         $this->db->join('staff_roles as staff_create_by_roles', 'staff_create_by_roles.id = create_by.id');
         $this->db->join('roles as `create_by_role`', 'create_by_role.id = staff_create_by_roles.role_id');
@@ -409,7 +410,7 @@ class Conference_model extends MY_Model
         $this->db->join('classes', 'classes.id = conferences.class_id');
         $this->db->join('sections', 'sections.id = conferences.section_id');
         $this->db->join('staff as for_create', 'for_create.id = conferences.staff_id');
-        $this->db->join('staff_roles', 'staff_roles.id = for_create.id');
+        $this->db->join('staff_roles', 'staff_roles.staff_id = for_create.id');
         $this->db->join('roles as `for_create_role`', 'for_create_role.id = staff_roles.role_id');
         $this->db->where('conferences.class_id', $class_id);
         $this->db->where('conferences.section_id', $section_id);
@@ -427,7 +428,7 @@ class Conference_model extends MY_Model
         $this->db->join('patients', 'patients.id = conferences.patient_id');
         $this->db->join('staff as for_create', 'for_create.id = conferences.staff_id');
         $this->db->join('staff as create_by', 'create_by.id = conferences.created_id');
-        $this->db->join('staff_roles', 'staff_roles.id = for_create.id');
+        $this->db->join('staff_roles', 'staff_roles.staff_id = for_create.id');
         $this->db->join('roles as `for_create_role`', 'for_create_role.id = staff_roles.role_id');
         $this->db->join('staff_roles as staff_create_by_roles', 'staff_create_by_roles.id = create_by.id');
         $this->db->join('roles as `create_by_role`', 'create_by_role.id = staff_create_by_roles.role_id');

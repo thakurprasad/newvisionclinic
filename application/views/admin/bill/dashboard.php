@@ -11,7 +11,10 @@
                     </div>
                     <div class="box-body pb0">
                         <div class="row">
-                            <?php if ($this->rbac->hasPrivilege('appointment_billing', 'can_view')) {?>
+                        <?php 
+                        if ($this->module_lib->hasActive('appointment')) {
+                            if ($this->rbac->hasPrivilege('appointment_billing', 'can_view')) {?>
+                            
                             <div class="col-lg-4 col-md-6 col-sm-6">
                                 <div class="billingbox text-center">
                                     <a href="<?php echo base_url('admin/bill/appointment');?>">
@@ -20,7 +23,10 @@
                                     </a>
                                 </div>
                             </div><!--./col-lg-4-->
-                        <?php } if ($this->rbac->hasPrivilege('opd_billing', 'can_view')) {?> 
+                            
+                        <?php } }  if ($this->module_lib->hasActive('opd')) {
+                            if ($this->rbac->hasPrivilege('opd_billing', 'can_view')) {?> 
+                            
                             <div class="col-lg-4 col-md-6 col-sm-6">
                                 <div class="billingbox text-center">
                                     <a href="<?php echo base_url('admin/bill/opd');?>">
@@ -30,8 +36,10 @@
                                     
                                 </div>
                             </div><!--./col-lg-4-->
-                        
-                        <?php } if ($this->rbac->hasPrivilege('pathology_billing', 'can_view')) {?>
+                            
+                        <?php } } if ($this->module_lib->hasActive('pathology')) {
+                            if ($this->rbac->hasPrivilege('pathology_billing', 'can_view')) {?>
+                            
                             <div class="col-lg-4 col-md-6 col-sm-6">
                                 <div class="billingbox text-center">
                                     <a href="<?php echo base_url('admin/bill/pathology');?>">
@@ -40,19 +48,10 @@
                                     </a>
                                 </div>
                             </div><!--./col-lg-4-->
-                        <?php } 
-                        if ($this->rbac->hasPrivilege('pharmacy_billing', 'can_view')) {?>
-                            <div class="col-lg-4 col-md-6 col-sm-6">
-                                <div class="billingbox text-center">
-                                    <a href="<?php echo base_url('admin/pharmacy/bill');?>">
-                                        <div class="billingbox-icon"><i class="fas fa-mortar-pestle"></i></div> 
-                                        <p><?php echo $this->lang->line('pharmacy'); ?></p>
-                                    </a>
-                                </div>
-                            </div><!--./col-lg-4-->
-                        <?php } 
-
-                        if ($this->rbac->hasPrivilege('radiology_billing', 'can_view')) {?>
+                            
+                        <?php } } if ($this->module_lib->hasActive('radiology')) {
+                            if ($this->rbac->hasPrivilege('radiology_billing', 'can_view')) {?>
+                            
                             <div class="col-lg-4 col-md-6 col-sm-6">
                                 <div class="billingbox text-center">
                                     <a href="<?php echo base_url('admin/bill/radiology');?>">
@@ -61,7 +60,10 @@
                                     </a>
                                 </div>
                             </div><!--./col-lg-4-->
-                            <?php } if ($this->rbac->hasPrivilege('blood_bank_billing', 'can_view')) {?>
+                            
+                        <?php } } if ($this->module_lib->hasActive('blood_bank')) {
+                            if ($this->rbac->hasPrivilege('blood_bank_billing', 'can_view')) {?>
+                            
                             <div class="col-lg-4 col-md-6 col-sm-6">
                                 <div class="billingbox text-center">
                                     <a href="<?php echo base_url('admin/bill/issueblood');?>">
@@ -79,7 +81,8 @@
                                     </a>
                                 </div>
                             </div><!--./col-lg-4-->
-                        <?php } ?>
+                        <?php } } ?>
+                        
                         </div>
                     </div><!-- /.box-body -->
                 </div>

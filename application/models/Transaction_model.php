@@ -318,14 +318,14 @@ class Transaction_model extends MY_Model
                    WHEN (blood_issue_id IS NOT NULL) THEN blood_issue_id       
                    WHEN (ambulance_call_id IS NOT NULL) THEN ambulance_call_id       
                 END AS reference,
-                section,transactions.opd_id as module_id,patients.patient_name,patients.id as `patient_id`,'opd' head,'opd_no' module_no,staff.name,staff.surname,staff.employee_id from transactions LEFT JOIN ipd_details on ipd_details.id = transactions.ipd_id LEFT JOIN patients on patients.id = transactions.patient_id LEFT JOIN opd_details on opd_details.id = transactions.opd_id LEFT JOIN pharmacy_bill_basic on pharmacy_bill_basic.id = transactions. pharmacy_bill_basic_id LEFT JOIN pathology_billing on pathology_billing.id = transactions.pathology_billing_id LEFT JOIN radiology_billing on radiology_billing.id = transactions.radiology_billing_id LEFT JOIN blood_issue on blood_issue.id = transactions.blood_issue_id LEFT JOIN staff on staff.id = transactions.received_by where   transactions.payment_date >='". $start_date."'and transactions.payment_date <= '".$end_date."' and  1=1 ".$condition." ";
+                section,transactions.opd_id as module_id,patients.patient_name,patients.id as `patient_id`,'opd' head,'opd_no' module_no,staff.name,staff.surname,staff.employee_id from transactions LEFT JOIN ipd_details on ipd_details.id = transactions.ipd_id LEFT JOIN patients on patients.id = transactions.patient_id LEFT JOIN opd_details on opd_details.id = transactions.opd_id LEFT JOIN pharmacy_bill_basic on pharmacy_bill_basic.id = transactions. pharmacy_bill_basic_id LEFT JOIN pathology_billing on pathology_billing.id = transactions.pathology_billing_id LEFT JOIN radiology_billing on radiology_billing.id = transactions.radiology_billing_id LEFT JOIN blood_issue on blood_issue.id = transactions.blood_issue_id LEFT JOIN staff on staff.id = transactions.received_by where date_format(transactions.payment_date,'%Y-%m-%d') >='". $start_date."'and date_format(transactions.payment_date,'%Y-%m-%d') <= '".$end_date."' and  1=1 ".$condition." ";
                $this->datatables->query($sql) 
               ->searchable('transactions.id,patients.patient_name,patients.id,reference,transactions.payment_date,staff.name,staff.surname,staff.employee_id,transactions.type,transactions.payment_mode,transactions.case_reference_id,opd_id,ipd_id,pharmacy_bill_basic_id,pathology_billing_id,radiology_billing_id,transactions.blood_donor_cycle_id,blood_issue_id,ambulance_call_id,transactions.amount')
               ->orderable('transactions.id,transactions.payment_date,patients.patient_name,reference,ward,staff.name,transactions.type,transactions.payment_mode,transactions.amount')
               ->sort('transactions.payment_date','desc')
               ->query_where_enable(TRUE);
         return $this->datatables->generate('json');
-    }  
+    } 
 
     //new running code
      public function opdpatientRecord($start_date, $end_date,$collect_staff=null) {
@@ -819,15 +819,16 @@ class Transaction_model extends MY_Model
                 $custom_join .= ' LEFT JOIN custom_field_values as '.$tb_counter.' ON transactions.pathology_billing_id = '.$tb_counter.'.belong_table_id AND '.$tb_counter.'.custom_field_id = '.$custom_fields_value->id;
                 $i++;
             }
-        }
+        } 
       
         $field_variable = (empty($field_var_array))? "": ",".implode(',', $field_var_array);
         $custom_field_column = (empty($custom_field_column_array))? "": ",".implode(',', $custom_field_column_array);
 
-         $sql="select transactions.id,'pathology' head,'pathology_billing' module_no, pathology_category.category_name, pathology_billing.doctor_name,pathology_billing.net_amount,( SELECT IFNULL(SUM(transactions.amount),0) from transactions WHERE transactions.pathology_billing_id=pathology_billing.id ) as paid_amount,transactions.pathology_billing_id as module_id,transactions.payment_date,transactions.amount, patients.patient_name,patients.id as `patient_id`,staff.name,staff.surname,staff.employee_id,pathology.test_name,pathology.short_name".$field_variable." from pathology_billing 
+         $sql="select transactions.id,'pathology' head,'pathology_billing' module_no, pathology_category.category_name, pathology_billing.doctor_name, transactions.pathology_billing_id as module_id,transactions.payment_date,transactions.amount, patients.patient_name,patients.id as `patient_id`,staff.name,staff.surname,staff.employee_id,pathology.test_name,pathology.short_name,charges.standard_charge".$field_variable." from pathology_billing 
              inner JOIN pathology_report on pathology_billing.id = pathology_report.pathology_bill_id 
                inner JOIN pathology on pathology.id = pathology_report.pathology_id
                inner join pathology_category on pathology_category.id = pathology.pathology_category_id
+               inner join charges on pathology.charge_id = charges.id              
               LEFT JOIN transactions on pathology_billing.id = transactions.pathology_billing_id 
               LEFT JOIN patients on patients.id = pathology_billing.patient_id 
               LEFT JOIN staff on staff.id = pathology_report.collection_specialist ".$custom_join." 
@@ -841,7 +842,7 @@ class Transaction_model extends MY_Model
         return $this->datatables->generate('json');
     }  
  
-     public function radiologybillRecord($start_date, $end_date,$collect_staff) {
+    public function radiologybillRecord($start_date, $end_date,$collect_staff) {
 
         $condition="" ;
         if($collect_staff!="")
@@ -918,10 +919,11 @@ class Transaction_model extends MY_Model
             $field_variable = (empty($field_var_array))? "": ",".implode(',', $field_var_array);
             $custom_field_column = (empty($custom_field_column_array))? "": ",".implode(',', $custom_field_column_array);
 
-            $sql="select transactions.id,lab.lab_name,'radiology' head,'radiology_billing' module_no,radiology_billing.patient_id,patients.patient_name,radiology_billing.note,radiology_billing.doctor_name,transactions.radiology_billing_id as module_id,radiology_billing.net_amount,transactions.payment_date,transactions.amount,(SELECT IFNULL(SUM(transactions.amount),0) from transactions WHERE transactions.radiology_billing_id=radiology_billing.id ) as paid_amount,staff.name,staff.surname,staff.employee_id,radio.test_name,radio.short_name".$field_variable." from radiology_billing 
+            $sql="select transactions.id,lab.lab_name,'radiology' head,'radiology_billing' module_no,radiology_billing.patient_id,patients.patient_name,radiology_billing.note,radiology_billing.doctor_name,transactions.radiology_billing_id as module_id,radiology_billing.net_amount,transactions.payment_date,transactions.amount,charges.standard_charge,staff.name,staff.surname,staff.employee_id,radio.test_name,radio.short_name".$field_variable." from radiology_billing 
              inner JOIN radiology_report on radiology_billing.id = radiology_report.radiology_bill_id 
                inner JOIN radio on radio.id = radiology_report.radiology_id
                inner join lab on lab.id = radio.radiology_category_id
+               inner join charges on radio.charge_id = charges.id                
               LEFT JOIN transactions on radiology_billing.id = transactions.radiology_billing_id 
               LEFT JOIN patients on patients.id = radiology_billing.patient_id 
               LEFT JOIN staff on staff.id = radiology_report.collection_specialist ".$custom_join." 

@@ -792,12 +792,12 @@ $this->rbac->hasPrivilege('patient_queue','can_view')) {
                 }
                     } 
 
-                     if ($this->module_lib->hasActive('blood_bank')) {
-                        if ($this->rbac->hasPrivilege('blood_bank_product', 'can_view')) {
+                     // if ($this->module_lib->hasActive('blood_bank')) {
+                        // if ($this->rbac->hasPrivilege('blood_bank_product', 'can_view')) {
                             ?>
                                                 <li class="<?php echo set_Submenu('admin/bloodbank'); ?>"><a href="<?php echo base_url(); ?>admin/bloodbank/products"><i class="fas fa-angle-right"></i> <?php echo $this->lang->line('blood_bank'); ?></a></li>
                                                 <?php
-                        }}
+                        // }}
                     if (($this->rbac->hasPrivilege('symptoms_type', 'can_view')) || ($this->rbac->hasPrivilege('symptoms_head', 'can_view'))) {
                         ?>
                                                 <li class="<?php echo set_Submenu('symptoms/index'); ?>"><a href="<?php echo base_url(); ?>admin/symptoms"><i class="fas fa-angle-right"></i> <?php echo $this->lang->line('symptoms'); ?></a></li>

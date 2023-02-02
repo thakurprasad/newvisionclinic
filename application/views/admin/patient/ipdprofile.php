@@ -3,10 +3,6 @@ $currency_symbol = $this->customlib->getHospitalCurrencyFormat();
 $genderList = $this->customlib->getGender();
 $case_reference_id=$result['case_reference_id'];
 $categorylist = $this->operationtheatre_model->category_list();
-
-$role_array = $this->session->userdata['hospitaladmin']['roles'];
-$role = array_values($role_array)[0];
-
 ?>
 <link rel="stylesheet" href="<?php echo base_url(); ?>backend/plugins/timepicker/bootstrap-timepicker.min.css">
 <link rel="stylesheet" href="<?php echo base_url(); ?>backend/multiselect/css/jquery.multiselect.css">
@@ -436,7 +432,8 @@ $role = array_values($role_array)[0];
                                 </div>
                                     </div><!--./col-lg-6-->
                                     <div class="col-lg-6 col-md-6 col-sm-12">
-                                        <div class="row hide ipd-profile-bill-role-<?= $role ?>">
+                                        <div class="row">
+                                            <?php if ($this->module_lib->hasActive('ipd')) { ?>
                                             <div class="col-md-6 project-progress-bars">
                                                 <div class="row">
                                                     <div class="col-md-12 mtop5">
@@ -453,6 +450,7 @@ $role = array_values($role_array)[0];
                                                     </div>
                                                 </div><!--./row-->
                                            </div><!--./col-lg-6-->
+                                           <?php } if ($this->module_lib->hasActive('pharmacy')) { ?> 
                                            <div class="col-md-6 project-progress-bars">
                                                 <div class="row">
                                                     <div class="col-md-12 mtop5">
@@ -469,9 +467,10 @@ $role = array_values($role_array)[0];
                                                     </div>
                                                 </div>    
                                            </div><!--./col-lg-6-->
-                                            
+                                            <?php } ?>   
                                         </div><!--./row-->
-                                        <div class="row hide ipd-profile-bill-role-<?= $role ?>">
+                                        <div class="row">
+                                         <?php if ($this->module_lib->hasActive('pathology')) { ?> 
                                             <div class="col-md-6 project-progress-bars">
                                                 <div class="row">
                                                     <div class="col-md-12 mtop5">
@@ -488,6 +487,7 @@ $role = array_values($role_array)[0];
                                                     </div>
                                                 </div><!--./row-->
                                            </div><!--./col-lg-6-->
+                                           <?php } if ($this->module_lib->hasActive('radiology')) { ?>
                                            <div class="col-md-6 project-progress-bars">
                                                 <div class="row">
                                                     <div class="col-md-12 mtop5">
@@ -504,9 +504,10 @@ $role = array_values($role_array)[0];
                                                     </div>
                                                 </div>    
                                            </div><!--./col-lg-6-->
-                                            
+                                             <?php } ?>
                                         </div><!--./row-->
-                                        <div class="row hide ipd-profile-bill-role-<?= $role ?>">
+                                        <div class="row">
+                                        <?php if ($this->module_lib->hasActive('blood_bank')) { ?>
                                             <div class="col-md-6 project-progress-bars">
                                                 <div class="row">
                                                     <div class="col-md-12 mtop5">
@@ -523,6 +524,7 @@ $role = array_values($role_array)[0];
                                                     </div>
                                                 </div><!--./row-->
                                            </div><!--./col-lg-6-->
+                                           <?php } if ($this->module_lib->hasActive('ambulance')) { ?> 
                                            <div class="col-md-6 project-progress-bars">
                                                 <div class="row">
                                                     <div class="col-md-12 mtop5">
@@ -539,7 +541,7 @@ $role = array_values($role_array)[0];
                                                     </div>
                                                 </div>    
                                            </div><!--./col-lg-6-->
-                                            
+                                            <?php } ?>
                                         </div><!--./row-->
                                         <div class="box-header pl-0">
                                            <h3 class="text-uppercase bolds mt0 mb0 ptt10 pull-left font14"><?php echo $this->lang->line('medication'); ?></h3>
@@ -782,13 +784,13 @@ $role = array_values($role_array)[0];
                                     <hr class="hr-panel-heading hr-10">    
                                         
                                          
-                                        <div class="box-header mb10 pl-0  hide ipd-profile-bill-role-<?= $role ?>">
+                                        <div class="box-header mb10 pl-0">
                                            <h3 class="text-uppercase bolds mt0 mb0 ptt10 pull-left font14"><?php echo $this->lang->line('charges'); ?></h3>
                                            <div class="pull-right">
                                                
                                           </div>
                                         </div>
-                                        <div class="box-header mb10 pl-0 hide ipd-profile-bill-role-<?= $role ?>">
+                                        <div class="box-header mb10 pl-0">
                                             <div class="table-responsive">
                                     <table class="table table-striped table-bordered  mb0">
                                         <?php  if (!empty($charges)) {?>
@@ -844,13 +846,13 @@ $role = array_values($role_array)[0];
                                 <?php } ?>
                                 </div> 
                                         </div>
-                                         <div class="box-header mb10 pl-0 hide ipd-profile-bill-role-<?= $role ?>">
+                                         <div class="box-header mb10 pl-0">
                                            <h3 class="text-uppercase bolds mt0 mb0 ptt10 mb0 pull-left font14"><?php echo $this->lang->line('payment'); ?></h3>
                                            <div class="pull-right">
                                                
                                           </div>
                                         </div>
-                                         <div class="box-header mb10 pl-0 hide ipd-profile-bill-role-<?= $role ?>">
+                                         <div class="box-header mb10 pl-0">
                                              <div class="table-responsive">
                                                 <?php if (!empty($payment_details)) { ?>
                                 <table class="table table-striped table-bordered  mb0">
@@ -1864,7 +1866,7 @@ $role = array_values($role_array)[0];
                                                 $taxamount = amountFormat($tax_amount);
                                                     ?>
                                                     <tr>
-                                                        <td><?php echo $this->customlib->YYYYMMDDHisTodateFormat($charge['date'],$this->customlib->getHospitalTimeFormat()); ?>
+                                                        <td><?php echo $this->customlib->YYYYMMDDHisTodateFormat($charge['date']); ?>
                                                             
                                                         </td>
                                                         <td style="text-transform: capitalize;"><?php echo $charge["name"] ?>
@@ -1945,10 +1947,10 @@ $role = array_values($role_array)[0];
 
                                             <?php
                                             $total_payment=0;
-                                            if (!empty($payment_details)) {
-                                                
+                                            if (!empty($payment_details)) {                                               
 
                                                 foreach ($payment_details as $payment) {
+                                                    if ($payment['type'] != 'refund') {
                                                     if (!empty($payment['amount'])) {
                                                         $total_payment += $payment['amount'];
                                                     }
@@ -2002,7 +2004,7 @@ $role = array_values($role_array)[0];
                                                         </td>
                                                     </tr>
 
-                                    <?php } ?>                                 
+                                                 <?php } } ?>                                 
                                             </tbody>
                                                 <tr class="box box-solid total-bg">
                                                     <td></td> 
@@ -3890,7 +3892,7 @@ $role = array_values($role_array)[0];
                                                     <label for="exampleInputFile">
                                                             <?php echo $this->lang->line('bed_group'); ?></label>
                                                     <div>
-                                                        <select class="form-control" name='bed_group_id' id='ebed_group_id' onchange="getBed(this.value, '', 'yes')">
+                                                        <select class="form-control" name='bed_group_id' id='ebed_group_id' onchange="getBed(this.value, '', 'yes','ebed_nos')">
                                                             <option value=""><?php echo $this->lang->line('select'); ?></option>
                                                             <?php foreach ($bedgroup_list as $key => $bedgroup) {
                                                                 ?>

@@ -132,9 +132,7 @@ $currency_symbol = $this->customlib->getHospitalCurrencyFormat();
                                             } 
                                         }
                                         ?>  
-                                        <th><?php echo $this->lang->line('amount') . '(' . $currency_symbol . ')'; ?></th>
-                                        <th><?php echo $this->lang->line('paid_amount') . '(' . $currency_symbol . ')'; ?></th>
-                                        <th><?php echo $this->lang->line('balance_amount') . '(' . $currency_symbol . ')'; ?></th>
+                                        <th><?php echo $this->lang->line('amount') . '(' . $currency_symbol . ')'; ?></th> 
                                     </tr>
                                 </thead>
                                 <tbody></tbody>

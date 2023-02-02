@@ -46,7 +46,7 @@ $genderList = $this->customlib->getGender();
 <div class="modal fade" id="myModal" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog pup100" role="document">
         <div class="modal-content modal-media-content">
-                    <form id="bill" accept-charset="utf-8" method="post"> 
+         <form id="bill" accept-charset="utf-8" method="post"> 
             <div class="modal-header modal-media-header">
                 <button type="button" class="close pupclose" data-dismiss="modal">&times;</button>
                  <div class="row">
@@ -182,7 +182,7 @@ $genderList = $this->customlib->getGender();
                                                         <span class="text-danger"><?php echo form_error('purchase_price[]'); ?></span>
                                                     </td>
                                                     <td class="text-right">
-                                                        <div class=""> 
+                                                        <div class="w-100-px"> 
                                                                 <div class="input-group">
                                                                 <input type="text" change="multiply(0)" class="form-control right-border-none"  name="purchase_tax[]" id="purchase_tax0"  autocomplete="off">
                                                                 <span class="input-group-addon "> %</span>

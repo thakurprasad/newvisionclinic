@@ -299,7 +299,7 @@ if (isset($title)) {
            
 <?php if ($this->rbac->hasPrivilege('calendar_to_do_list', 'can_add')) {?>
 
-             var datetime_format = '<?php echo $result = strtr($this->customlib->getHospitalDateFormat(true, true), ['d' => 'DD', 'm' => 'MM', 'Y' => 'YYYY', 'H' => 'hh', 'i' => 'mm']) ?>';
+             var datetime_format = '<?php echo $result = strtr($this->customlib->getHospitalDateFormat(true, true), ['d' => 'DD', 'm' => 'MM', 'M' => 'MMM', 'Y' => 'YYYY', 'H' => 'hh', 'i' => 'mm']) ?>';
 
                 $("#input-field").val('');
                 $("#desc-field").text('');
@@ -321,7 +321,7 @@ if (isset($title)) {
     });
 
     $(document).ready(function () {
-         var datetime_format = '<?php echo $result = strtr($this->customlib->getHospitalDateFormat(true, true), ['d' => 'DD', 'm' => 'MM', 'Y' => 'YYYY', 'H' => 'hh', 'i' => 'mm']) ?>';
+         var datetime_format = '<?php echo $result = strtr($this->customlib->getHospitalDateFormat(true, true), ['d' => 'DD', 'm' => 'MM', 'M' => 'MMM', 'Y' => 'YYYY', 'H' => 'hh', 'i' => 'mm']) ?>';
 
         $("#date-field").daterangepicker({timePicker: true, timePickerIncrement: 5, locale: {
                 format: datetime_format
@@ -350,7 +350,7 @@ if (isset($title)) {
     });
 
     function datepic() {
-         var datetime_format = '<?php echo $result = strtr($this->customlib->getHospitalDateFormat(true, true), ['d' => 'DD', 'm' => 'MM', 'Y' => 'YYYY', 'H' => 'hh', 'i' => 'mm']) ?>';
+         var datetime_format = '<?php echo $result = strtr($this->customlib->getHospitalDateFormat(true, true), ['d' => 'DD', 'm' => 'MM', 'M' => 'MMM', 'Y' => 'YYYY', 'H' => 'hh', 'i' => 'mm']) ?>';
 
         $("#date-field").daterangepicker({
             format: datetime_format
@@ -364,7 +364,7 @@ if (isset($title)) {
             return;
         } 
 
-        var datetime_format = '<?php echo $result = strtr($this->customlib->getHospitalDateFormat(true, true), ['d' => 'DD', 'm' => 'MM', 'Y' => 'YYYY', 'H' => 'hh', 'i' => 'mm']) ?>';
+         var datetime_format = '<?php echo $result = strtr($this->customlib->getHospitalDateFormat(true, true), ['d' => 'DD', 'm' => 'MM', 'M' => 'MMM', 'Y' => 'YYYY', 'H' => 'hh', 'i' => 'mm']) ?>';
 
         $.ajax({
             url: base_url + 'admin/calendar/view_event/' + id,
@@ -415,7 +415,7 @@ if (isset($title)) {
             });
         });
 
-        var datetime_format = '<?php echo $result = strtr($this->customlib->getHospitalDateFormat(true, true), ['d' => 'DD', 'm' => 'MM', 'Y' => 'YYYY', 'H' => 'HH', 'i' => 'mm']) ?>';
+         var datetime_format = '<?php echo $result = strtr($this->customlib->getHospitalDateFormat(true, true), ['d' => 'DD', 'm' => 'MM', 'M' => 'MMM', 'Y' => 'YYYY', 'H' => 'hh', 'i' => 'mm']) ?>';
         
         $("body").delegate(".datetime", "focusin", function () {
             $(this).datetimepicker({
@@ -429,7 +429,7 @@ if (isset($title)) {
 
 
     $(document).ready(function (e) {
-        var datetime_format = '<?php echo $result = strtr($this->customlib->getHospitalDateFormat(true, true), ['d' => 'DD', 'm' => 'MM', 'Y' => 'YYYY', 'H' => 'hh', 'i' => 'mm']) ?>';
+         var datetime_format = '<?php echo $result = strtr($this->customlib->getHospitalDateFormat(true, true), ['d' => 'DD', 'm' => 'MM', 'M' => 'MMM', 'Y' => 'YYYY', 'H' => 'hh', 'i' => 'mm']) ?>';
         $("body").delegate(".datetime", "focusin", function () {
             $(this).datetimepicker({
                 format: datetime_format,
