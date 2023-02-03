@@ -436,7 +436,7 @@ class Onlineappointment extends Admin_Controller
             $name      = $this->input->post("name");
             $time_from = date("H:i:s", strtotime($this->input->post("time_from")));
             $time_to   = date("H:i:s", strtotime($this->input->post("time_to")));
-            if ($time_from < $time_to) {
+            if ($time_from <> $time_to) {
                 $shift = array(
                     "name"       => $name,
                     "start_time" => $time_from,
