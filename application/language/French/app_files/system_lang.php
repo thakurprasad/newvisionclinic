@@ -2112,3 +2112,13 @@ $lang["other_documents"] ="Autres documents";
 $lang["add_credential"] ="Ajouter des informations d&#39;identification";
 $lang["global"]			="Global";
 $lang["what_is_new_in"] = "";
+
+
+# added by T.Prasad 
+$lang['nationality'] = 'Nationality';
+$lang['passport_no'] = 'Passport No';
+$lang['upload_passport'] = 'Upload Passport';
+$lang['voter_id']    = 'Voter ID No';
+$lang['upload_voter_id']    = 'Upload Voter ID';
+$lang['patient_signature']  = 'Patient Sisgnature';
+$lang['all_select']  = 'All Select';
