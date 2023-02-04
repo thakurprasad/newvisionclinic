@@ -63,7 +63,7 @@ $currency_symbol = $this->customlib->getHospitalCurrencyFormat();
             <div class="col-sm-3">
                 <div class="form-group">
                     <label><?php echo $this->lang->line('report_days'); ?></label>
-                    <input type="number" min="0" name="report_days" class="form-control"  value="<?php echo set_value('report_days',$result->report_days);?>">
+                    <input type="text" min="0" name="report_days" class="form-control"  value="<?php echo set_value('report_days',$result->report_days);?>">
                 </div>
             </div>
             <div class="col-sm-3">

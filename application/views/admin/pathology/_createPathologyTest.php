@@ -2,7 +2,7 @@
 $currency_symbol = $this->customlib->getHospitalCurrencyFormat(); 
 ?>
 <input type="hidden" name="id" value="0">
-<div class="row">
+<div class="row"> 
     <div class="col-lg-12 col-md-12 col-sm-12">
         <div class="row">
             <div class="col-sm-3">
@@ -60,7 +60,7 @@ $currency_symbol = $this->customlib->getHospitalCurrencyFormat();
             <div class="col-sm-3">
                 <div class="form-group">
                     <label><?php echo $this->lang->line('report_days'); ?></label>
-                    <input type="number" min="0" value="0" name="report_days" class="form-control">
+                    <input type="text" min="0" value="0" name="report_days" class="form-control">
                 </div>
             </div>
             <div class="col-sm-3">

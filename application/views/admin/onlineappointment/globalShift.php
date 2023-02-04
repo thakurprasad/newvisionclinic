@@ -169,6 +169,7 @@ $this->load->view('admin/onlineappointment/appointmentSidebar');
         var $this = $(this);
         $this.datetimepicker({
             format: 'LT'
+            //format: 'HH:mm'
         });
     });
     
