@@ -4,9 +4,15 @@
 </style>
 <?php
 $currency_symbol = $this->customlib->getHospitalCurrencyFormat();
+
+#this code added by T.prasad at 05/02/2023
+$role_array = $this->session->userdata['hospitaladmin']['roles'];
+$role = array_values($role_array)[0];
+$hide_section =  ' admin_pharmacy_bill admin_pharmacy_bill_role_'.$role . " "; 
+
 ?>
     <div id="html-2-pdfwrapper">
-        <div class="row">
+        <div class="row"> 
             <!-- left column -->
             <div class="col-md-12">
                 <div class="">
@@ -68,7 +74,8 @@ $currency_symbol = $this->customlib->getHospitalCurrencyFormat();
                             <th><?php echo $this->lang->line('expiry_date'); ?></th>
                             <th><?php echo $this->lang->line('quantity'); ?></th>
                             <th class="text-left" style="text-align: left;"><?php echo $this->lang->line('tax'); ?></th>
-                            <th style="text-align: right;"><?php echo $this->lang->line('amount') . ' (' . $currency_symbol . ')'; ?></th>
+                            <th style="text-align: right;" class="<?= $hide_section ?>">
+                                <?php echo $this->lang->line('amount') . ' (' . $currency_symbol . ')'; ?></th>
                         </tr>
                         <?php
 $j = $total_tax=0;
@@ -90,8 +97,8 @@ foreach ($detail as $bill) {
                                 <td><?php echo $bill["unit"]; ?></td>
                                 <td><?php echo $this->customlib->getMedicine_expire_month($bill['expiry']); ?></td>
                                 <td><?php echo $bill["quantity"]; ?></td>
-                                <td class="text-left" style="text-align: left;"><?php echo amountFormat($tax)." (".$bill['tax']."%)"; ?></td>
-                                <td align="right"><?php echo amountFormat($bill["sale_price"] * $bill["quantity"]); ?></td>
+                                <td class="text-left <?= $hide_section ?>" style="text-align: left;"><?php echo amountFormat($tax)." (".$bill['tax']."%)"; ?></td>
+                                <td align="right <?= $hide_section ?>"><?php echo amountFormat($bill["sale_price"] * $bill["quantity"]); ?></td>
                             </tr>
                             <?php
 $j++;
@@ -122,7 +129,7 @@ if (!$print) {
                     </table>
                     </div>
                     <div class="col-md-6">
-                    <table align="right" class="printablea4">
+                    <table align="right" class="printablea4 <?= $hide_section ?>">
                         <?php if (!empty($result["total"])) {?>
                             <tr>
                                 <th style="width: 50%;text-align:left"><?php echo $this->lang->line('total') . " (" . $currency_symbol . ")"; ?></th>

@@ -24,3 +24,5 @@ backup/database_backup/*
 uploads
 
 *.zip
+
+backend/captcha_images

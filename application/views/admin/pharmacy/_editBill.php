@@ -1,5 +1,11 @@
 <?php 
 $currency_symbol = $this->customlib->getHospitalCurrencyFormat();
+
+
+#this code added by T.prasad at 05/02/2023
+$role_array = $this->session->userdata['hospitaladmin']['roles'];
+$role = array_values($role_array)[0];
+$hide_section =  ' admin_pharmacy_bill admin_pharmacy_bill_role_'.$role . " "; 
  ?>
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-12">                      
@@ -22,9 +28,9 @@ $currency_symbol = $this->customlib->getHospitalCurrencyFormat();
                                                     <th width="10%"><?php echo $this->lang->line('batch_no'); ?> <small class="req" style="color:red;">*</small></th>
                                                     <th width="12%"><?php echo $this->lang->line('expiry_date'); ?><small class="req" style="color:red;"> *</small></th>
                                                     <th class="text-right" width="13%"><?php echo $this->lang->line('quantity'); ?><small class="req" style="color:red;"> *</small> <?php echo " | " . $this->lang->line('available_qty'); ?></th>
-                                                    <th class="text-right" width="10%"><?php echo $this->lang->line('sale_price') . ' (' . $currency_symbol . ')'; ?><small class="req" style="color:red;"> *</small></th>
-                                                    <th class="text-right" width="7%"><?php echo $this->lang->line('tax'); ?></th>
-                                                    <th class="text-right" width="15%"><?php echo $this->lang->line('amount') . " (" . $currency_symbol . ")"; ?><small class="req" style="color:red;"> *</small></th>
+                                                    <th class="text-right <?= $hide_section ?>" width="10%"><?php echo $this->lang->line('sale_price') . ' (' . $currency_symbol . ')'; ?><small class="req" style="color:red;"> *</small></th>
+                                                    <th class="text-right <?= $hide_section ?>" width="7%"><?php echo $this->lang->line('tax'); ?></th>
+                                                    <th class="text-right <?= $hide_section ?>" width="15%"><?php echo $this->lang->line('amount') . " (" . $currency_symbol . ")"; ?><small class="req" style="color:red;"> *</small></th>
                                                      <th class="text-right" width="2%"></th>
                                                 </tr>
                                             </thead>
@@ -97,11 +103,11 @@ foreach ($detail as $bill_detail_key => $bill_detail_value) {
                                                     <input type="hidden" class="available_quantity" name="available_quantity_<?php echo $row_value;?>" id="available_quantity0">
 
                                                 </td>
-                                                <td class="text-right">
+                                                <td class="text-right <?= $hide_section ?>">
                                                     <input type="text" name="sale_price_<?php echo $row_value;?>" id="sale_price<?php echo $row_value;?>"  class="form-control text-right price" readonly>
                                                     <span class="text-danger"><?php echo form_error('sale_price[]'); ?></span>
                                                 </td>
-                                                <td class="text-right">
+                                                <td class="text-right <?= $hide_section ?>">
                                                     
                                                             <div class="input-group">
                                                             <input type="text" class="form-control right-border-none medicine_tax"  name="tax_<?php echo $row_value;?>" readonly id="tax<?php echo $row_value;?>"  autocomplete="off">
@@ -109,7 +115,7 @@ foreach ($detail as $bill_detail_key => $bill_detail_value) {
                                                             </div>
                                                     
                                                 </td>
-                                                <td class="text-right">
+                                                <td class="text-right <?= $hide_section ?>">
                                                     <input type="text" name="amount_<?php echo $row_value;?>" id="amount<?php echo $row_value;?>" placeholder="" class="form-control text-right subtot" readonly>
                                                     <span class="text-danger"><?php echo form_error('net_amount[]'); ?></span>
                                                 </td>
@@ -181,7 +187,7 @@ if ((isset($doctor_select)) && ($doctor_select == $dvalue["id"])) {
 
 
                                         <div class="col-sm-6">
-                                            <table class="printablea4">
+                                            <table class="printablea4 <?= $hide_section ?>">
                                                 <tr>
                                                     <th width="40%"><?php echo $this->lang->line('total') . " (" . $currency_symbol . ")"; ?></th>
                                             <td width="60%" colspan="2" class="text-right ipdbilltable">

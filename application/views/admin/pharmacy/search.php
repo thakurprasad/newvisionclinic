@@ -1,5 +1,11 @@
 <?php
 $currency_symbol = $this->customlib->getHospitalCurrencyFormat();
+
+
+#this code added by T.prasad at 05/02/2023
+$role_array = $this->session->userdata['hospitaladmin']['roles'];
+$role = array_values($role_array)[0];
+$hide_section =  ' admin_pharmacy_bill admin_pharmacy_bill_role_'.$role . " "; 
 ?>
 <div class="content-wrapper">
     <!-- Main content -->

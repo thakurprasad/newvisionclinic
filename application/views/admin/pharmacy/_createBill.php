@@ -1,6 +1,11 @@
 <?php 
 
 $currency_symbol = $this->customlib->getHospitalCurrencyFormat();
+
+#this code added by T.prasad at 05/02/2023
+$role_array = $this->session->userdata['hospitaladmin']['roles'];
+$role = array_values($role_array)[0];
+$hide_section =  ' admin_pharmacy_bill admin_pharmacy_bill_role_'.$role . " "; 
  ?>
       <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-12">
@@ -70,11 +75,11 @@ $currency_symbol = $this->customlib->getHospitalCurrencyFormat();
                                                     <input type="hidden" class="available_quantity" name="available_quantity_1" id="available_quantity0">
                                                  
                                                 </td>
-                                                <td class="text-right">
+                                                <td class="text-right <?= $hide_section ?>">
                                                     <input type="text" name="sale_price_1" id="sale_price0"  class="form-control text-right price" readonly>
                                                     <span class="text-danger"><?php echo form_error('sale_price[]'); ?></span>
                                                 </td>
-                                                <td class="text-right">
+                                                <td class="text-right  <?= $hide_section ?>">
                                                     <div class=""> 
                                                             <div class="input-group">
                                                             <input type="text" class="form-control right-border-none medicine_tax"  name="tax_1" readonly id="tax0"  autocomplete="off">
@@ -82,7 +87,7 @@ $currency_symbol = $this->customlib->getHospitalCurrencyFormat();
                                                             </div>
                                                     </div>
                                                 </td>
-                                                <td class="text-right w-100px">
+                                                <td class="text-right w-100px  <?= $hide_section ?>">
                                                     <input type="text" name="amount_1" id="amount0" placeholder="" class="form-control text-right subtot" readonly>
                                                     <span class="text-danger"><?php echo form_error('net_amount[]'); ?></span>
                                                 </td>
@@ -92,7 +97,7 @@ $currency_symbol = $this->customlib->getHospitalCurrencyFormat();
                                             </tr>
                                         </table>
 
-                                       <a class="btn btn-info addplus-xs add-record mb10" data-added="0"><i class="fa fa-plus"></i> <?php echo $this->lang->line('add')?></a>  
+                                       <a class="<?= $hide_section ?> btn btn-info addplus-xs add-record mb10" data-added="0"><i class="fa fa-plus"></i> <?php echo $this->lang->line('add')?></a>  
                                     </div>
                                     <div class="divider"></div>
                                     
@@ -150,8 +155,8 @@ if ((isset($doctor_select)) && ($doctor_select == $dvalue["id"])) {
 
 
                                         <div class="col-sm-6">
-
-                                            <table class="printablea4">
+ 
+                                            <table class="printablea4 <?= $hide_section ?>">
 
 
                                                 <tr>
