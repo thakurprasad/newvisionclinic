@@ -221,7 +221,9 @@ class Onlineappointment_model extends MY_Model
     public function globalShift()
     {
         $query = $this->db
-            ->select("id,name,date_format(start_time,'%h:%i %p') as start_time ,date_format(end_time,'%h:%i %p') as end_time")
+           // ->select("id,name,date_format(start_time,'%h:%i %p') as start_time ,date_format(end_time,'%h:%i %p') as end_time")
+            ->select("id,name,date_format(start_time,'%H:%m') as start_time ,date_format(end_time,'%H:%i') as end_time")
+
             ->get("global_shift");
         $result = $query->result_array();
         return $result;
@@ -229,7 +231,7 @@ class Onlineappointment_model extends MY_Model
 
     public function getGlobalShift($id)
     {
-        $this->db->select("id,name,date_format(start_time,'%h:%i %p') as start_time ,date_format(end_time,'%h:%i %p') as end_time");
+        $this->db->select("id,name,date_format(start_time,'%H:%m') as start_time ,date_format(end_time,'%H:%m') as end_time");
         $this->db->where("id", $id);
         $query  = $this->db->get("global_shift");
         $result = $query->row_array();
