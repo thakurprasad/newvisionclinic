@@ -131,7 +131,8 @@ $this->load->view('admin/onlineappointment/appointmentSidebar');
     $(document).on('focus', '.time', function () {
         var $this = $(this);
         $this.datetimepicker({
-            format: 'LT'
+           // format: 'LT'
+             format: 'HH:mm'
         });
     });
     var tot_count = 0;
