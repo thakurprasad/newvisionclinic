@@ -56,7 +56,7 @@ $this->load->view('admin/onlineappointment/appointmentSidebar');
                     <hr/>
                             <div class="row">
                                 <div class="col-md-3">
-                                    <div class="form-group"> 
+                                    <div class="form-group">
                                         <label><?php echo $this->lang->line("consultation_duration"); ?><small class="req"> *</small></label>
                                         <input type="number" name='consult_time' form="" value="<?php echo isset($duration)?$duration:''; ?>" placeholder='' class="form-control" id="consult_time"/>
                                     </div>
@@ -100,7 +100,7 @@ $this->load->view('admin/onlineappointment/appointmentSidebar');
                     <?php if (isset($days)) { ?>
                     <div class="box-header ptbnull"></div>
                     <div class="nav-tabs-custom border0">
-                        <ul class="nav nav-tabs" id="myTabs">
+                        <ul class="nav nav-tabs" id="myTabs"> 
                             <?php
                             $count = 1;
                             foreach ($days as $days_key => $days_value) {

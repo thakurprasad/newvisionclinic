@@ -7,7 +7,10 @@ class Onlineappointment_model extends MY_Model
 {
     public function getShiftdata($doctor, $day, $shift)
     {
-        $this->db->select("id,staff_id as doctor_id,date_format(start_time,'%h:%i %p') as start_time ,date_format(end_time,'%h:%i %p') as end_time");
+      //  $this->db->select("id,staff_id as doctor_id,date_format(start_time,'%h:%i %p') as start_time ,date_format(end_time,'%h:%i %p') as end_time");
+
+        $this->db->select("id,staff_id as doctor_id,date_format(start_time,'%H:%m') as start_time ,date_format(end_time,'%H:%m') as end_time");
+
         $this->db->where("staff_id", $doctor);
         $this->db->where("global_shift_id", $shift);
         $this->db->where("day", $day);
