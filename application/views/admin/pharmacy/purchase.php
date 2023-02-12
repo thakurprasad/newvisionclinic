@@ -318,7 +318,7 @@ $genderList = $this->customlib->getGender();
         <div class="modal-content modal-media-content">
             <div class="modal-header modal-media-header">
                 <button type="button" class="close" data-toggle="tooltip" title="" data-dismiss="modal" data-original-title="Close" autocomplete="off">&times;</button>
-                <div class="modalicon"> 
+                <div class="modalicon 00000"> 
                     <div id='edit_deletebill'>
                         <a href="#" data-toggle="tooltip" data-placement="bottom"  data-target="#edit_prescription"  data-toggle="modal" title="" data-original-title="<?php echo $this->lang->line('edit'); ?>"><i class="fa fa-pencil"></i></a>
                         <a href="#" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="<?php echo $this->lang->line('delete'); ?>"><i class="fa fa-trash"></i></a>
