@@ -1,0 +1,15 @@
+
+OPEN BELLOW URL
+step 1. https://dashboard.ngrok.com/get-started/setup
+
+step 2. Connect your account
+
+open cmd line and GoTo server file and run bellow cmd
+
+example: 
+
+$ ngrok config add-authtoken 2LpT6Olh6fsGKjMwdeVzsl3FOZa_5ezyy2ycXa6GesMgu6yTv
+
+
+$ ngrok http 80 
+
