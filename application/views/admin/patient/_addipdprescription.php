@@ -8,7 +8,7 @@
                             <div class="col-sm-12">
                                 <div class="form-group">
                                     <label><?php echo $this->lang->line('header_note'); ?></label> 
-                                    <textarea style="height:50px" name="header_note" class="form-control" id="compose-textareanewadd"></textarea>
+                                    <textarea style="height:150px" name="header_note" class="form-control" id="compose-textareanewadd"></textarea>
                                 </div> 
                                 <hr/>
                             </div>
@@ -142,7 +142,7 @@
                             <div class="col-sm-12">
                                 <div class="form-group">
                                     <label><?php echo $this->lang->line('footer_note'); ?></label> 
-                                    <textarea style="height:50px" rows="1" name="footer_note" class="form-control" id="compose-textareasadd"></textarea>
+                                    <textarea style="height:150px" rows="1" name="footer_note" class="form-control" id="compose-textareasadd"></textarea>
                                 </div> 
                             </div>
                         </div>

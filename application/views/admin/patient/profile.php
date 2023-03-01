@@ -2436,7 +2436,7 @@ window.location.href = baseurl+'admin/patient/search';
              },
 
               complete: function() {
-                  $("#_compose-textareass,#_compose-textareaneww").wysihtml5({
+                  $("#compose-textareass,#compose-textareaneww").wysihtml5({
                         toolbar: {
                             "image": false,
                         }
