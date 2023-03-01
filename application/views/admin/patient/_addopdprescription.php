@@ -1,6 +1,6 @@
 <input type="hidden" name="visit_details_id" value="<?php echo $visit_details_id;?>">
 <input type="hidden" name="action" value="add">
-<input type="hidden" name="ipd_prescription_basic_id" value="0">
+<input type="hidden" name="ipd_prescription_basic_id" value="0"> 
                 <div class="row">
                     <div class="col-sm-9">
                     <div class="ptt10">

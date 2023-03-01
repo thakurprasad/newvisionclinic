@@ -5110,7 +5110,7 @@ $(".opd_symptoms_data_view").html(opd_symptoms_data_view);*/
              },
 
             complete: function() {
-                $("#compose-textareass,#compose-textareaneww").wysihtml5({
+                $("#_compose-textareass,#_compose-textareaneww").wysihtml5({
                         toolbar: {
                             "image": false,
                         }

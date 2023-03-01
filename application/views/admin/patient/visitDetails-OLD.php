@@ -2908,7 +2908,7 @@ if (empty($timeline_list)) {
         <div class="modal-content modal-media-content">
             <div class="modal-header modal-media-header">
                 <button type="button" class="close pupclose" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title"></h4>
+                <h4 class="modal-title"></h4>====
             </div>
             <form id="form_prescription" accept-charset="utf-8" enctype="multipart/form-data" method="post" class="">
                 <div class="pup-scroll-area"> 

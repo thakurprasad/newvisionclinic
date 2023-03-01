@@ -1,0 +1,17 @@
+
+Cloud server login details
+
+https://dd3d-105-179-8-107.in.ngrok.io/newvisionclinic/site/login
+username: info@websoft-tech.com
+password: WebSoft@321*
+
+
+For Local Access via LAN
+http://105.179.8.107/newvisionclinic/site/login
+username: info@websoft-tech.com
+password: WebSoft@321*
+
+
+
+http://172.16.9.205/newvisionclinic/site/login
+ 

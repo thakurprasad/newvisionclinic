@@ -1965,7 +1965,7 @@ $genderList = $this->customlib->getGender();
         <div class="modal-content modal-media-content">
             <div class="modal-header modal-media-header">
                 <button type="button" class="close pupclose" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title" id="prescription_title"></h4> 
+                <h4 class="modal-title" id="prescription_title"></h4>
             </div>
             <form id="form_prescription" accept-charset="utf-8" enctype="multipart/form-data" method="post">
              <div class="pup-scroll-area">   
@@ -2436,7 +2436,7 @@ window.location.href = baseurl+'admin/patient/search';
              },
 
               complete: function() {
-                  $("#compose-textareass,#compose-textareaneww").wysihtml5({
+                  $("#_compose-textareass,#_compose-textareaneww").wysihtml5({
                         toolbar: {
                             "image": false,
                         }
@@ -3180,6 +3180,7 @@ window.location.href = baseurl+'admin/patient/search';
    
 
     function printprescriptionmanual(visitid) {
+      // alert("profile-3183");
         var base_url = '<?php echo base_url() ?>';
         $.ajax({
             url: base_url + 'admin/prescription/getPrescriptionmanual/' + visitid,
@@ -3187,7 +3188,7 @@ window.location.href = baseurl+'admin/patient/search';
             data: {payslipid: visitid, print: 'yes'},
             success: function (result) {
                 $("#testdata").html(result);
-                popup(result);
+               popup(result);
             }
         });
     }
