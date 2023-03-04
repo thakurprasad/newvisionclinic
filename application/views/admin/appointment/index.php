@@ -141,7 +141,7 @@ $genderList      = $this->customlib->getGender_Patient();
                   <div class="form-group" style="position: relative; overflow:visible !important">
                     <label><?php echo $this->lang->line('appointment_date'); ?></label>
                     <small class="req"> *</small>
-                    <input type="text" id="datetimepicker" name="date" class="form-control datetime">
+                    <input type="text" id="datetimepicker" name="date" class="form-control datetime datetime_ ">
                     <span class="text-danger"><?php echo form_error('date'); ?></span>
                   </div>
                 </div>
@@ -1284,6 +1284,15 @@ function delete_record(id) {
     initDatatable('ajaxlist','admin/appointment/getappointmentdatatable',[],[],100);
   });
 } ( jQuery ) ) 
+
+
+
+  $(function() {
+    $('.datetime').datetimepicker({
+      format: 'DD.MM.YYYY H:m'
+      //language: 'pt-BR'
+    });
+  }); 
 </script>
 <!-- //========datatable end===== -->
 <?php $this->load->view('admin/patient/patientaddmodal') ?>

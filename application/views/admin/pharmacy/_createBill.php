@@ -10,8 +10,7 @@ $hide_section =  ' admin_pharmacy_bill admin_pharmacy_bill_role_'.$role . " ";
       <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-12">
                             <input name="customer_name" id="patient_name" type="hidden" class="form-control"/>
-                     
-                        
+                      
                             <input name="action_type" id="action_type" value="insert" type="hidden" class="form-control"/>
                               
                             <div class="row">

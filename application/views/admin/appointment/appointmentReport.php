@@ -213,4 +213,6 @@ $currency_symbol = $this->customlib->getHospitalCurrencyFormat();
         });
     }
 
+
+
 </script>
