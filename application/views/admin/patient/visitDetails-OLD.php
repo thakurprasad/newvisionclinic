@@ -5084,7 +5084,7 @@ $(document).on('click','#add_newcharge',function(){
              },
 
             complete: function() {
-                $("#compose-textareass,#compose-textareaneww").wysihtml5({
+                $("#_compose-textareass,#_compose-textareaneww").wysihtml5({
                         toolbar: {
                             "image": false,
                         }

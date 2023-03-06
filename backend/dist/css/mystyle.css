@@ -1,3 +1,4 @@
+
 /**
  * 
  * 
@@ -52,4 +53,15 @@ ul.patient-search-details li a{
 
 .admin_pharmacy_bill_role_4 {
     /*display: none; */
+}
+
+ @media print {
+  .footer-print-content {
+    position: fixed;
+    bottom: 0;
+  }
+}
+
+iframe.wysihtml5-sandbox {
+    min-height: 150px;
 }
