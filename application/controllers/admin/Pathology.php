@@ -27,6 +27,7 @@ class Pathology extends Admin_Controller
         $this->load->model(array('prefix_model', 'transaction_model'));
         $this->load->helper('customfield_helper');
         $this->load->helper('custom');
+ 
     }
 
     public function unauthorized()
@@ -1770,10 +1771,15 @@ class Pathology extends Admin_Controller
         $print_details         = $this->printing_model->get('', 'pathology');
         $data['print_details'] = $print_details;
         $id                    = $this->input->post('id');
+     /*   $id                    = $_GET['id'];*/
         $data['id']            = $id;
         $result                = $this->pathology_model->getPatientPathologyReportDetails($id);
         $data['result']        = $result;
         $page                  = $this->load->view('admin/pathology/_printPatientReportDetail', $data, true);
+      /*  if(isset($_GET['id'])){
+            echo $page;
+            exit();
+        }*/
         echo json_encode(array('status' => 1, 'page' => $page));
     }
 

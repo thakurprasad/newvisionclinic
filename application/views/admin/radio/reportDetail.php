@@ -470,7 +470,7 @@ foreach ($testlist as $dkey => $testlist_value) {
          total += parseFloat($(this).find("td input.amount").val());
          total_taxamt += parseFloat($(this).find("td input.taxamount").val());
         });
-        if(total>0){
+        if(total>=0){
         var discount_percent = $("#discount_percent").val();
         if (discount_percent != '') {
             var discount = (total * discount_percent) / 100;
