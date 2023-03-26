@@ -5207,6 +5207,7 @@ $('#myChargesModal').on('hidden.bs.modal', function (e) {
             e.preventDefault();
             $.ajax({
                 url: '<?php echo base_url(); ?>admin/patient/opd_detail_update',
+               // url: 'admin/patient/opd_detail_update',
                 type: "POST",
                 data: new FormData(this),
                 dataType: 'json',
