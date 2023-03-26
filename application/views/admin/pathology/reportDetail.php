@@ -1321,6 +1321,7 @@ $('#addpatient_id').on('select2:select', function (e) {
 
    function popup(data)
     {
+       // alert("line 170 - <?= __FILE__ ?>");
         var base_url = '<?php echo base_url() ?>';
         var frame1 = $('<iframe />');
         frame1[0].name = "frame1";
@@ -1342,7 +1343,7 @@ $('#addpatient_id').on('select2:select', function (e) {
             window.frames["frame1"].focus();
             window.frames["frame1"].print();
             frame1.remove();
-        }, 500);
+        }, 3000);
         return true;
     }
 
