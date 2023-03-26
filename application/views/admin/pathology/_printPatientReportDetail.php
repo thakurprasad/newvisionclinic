@@ -85,13 +85,21 @@
                 </div>
             </div>
           <div style="clear:both"></div>
+        
+        <div style="width:100%; text-align:center;">
+            <h4>CENTRE DE DIAGNOSTIC EYANO</h4>
+            <h5><b>Département de Laboratoire</b></h5>
+            <img src="<?php echo base_url(); ?>/uploads/stemp.png" style="max-width: 250px;">
+        </div>
+
              <p>
+
                         <?php
                         if (!empty($print_details[0]['print_footer'])) {
                             echo $print_details[0]['print_footer'];
                         }
                         ?>                          
-                        </p>
+            </p>
         </div>
     </div>
 </div>
