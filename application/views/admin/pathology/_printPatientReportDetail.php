@@ -1,3 +1,22 @@
+<?php 
+/*
+require_once APPPATH . "/third_party/phpqrcode/qrlib.php";
+$filename =   $id . '_' . $patient_id . ".png";
+$qr_code_image_path =   base_url() . 'uploads/qr-code/QR-'.$filename; // for get url
+$file_dir = FCPATH .'uploads\qr-code\QR-'.$filename; // for save dir url        
+$errorCorrectionLevel = 'L';
+$matrixPointSize = 6;
+
+$data =  base_url() . '/admin/pathologyQR/printPatientReportDetail?id='.$id.'&qr=1&patient_id='.$patient_id;
+
+QRcode::png($data, $file_dir, $errorCorrectionLevel, $matrixPointSize, 2);  
+   
+$qr_code_image_path;
+
+*/
+?>
+
+<link rel="stylesheet" href="<?= base_url() ?>/backend/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" href="<?php echo base_url(); ?>backend/dist/css/sh-print.css"> 
 <div class="print-area">
 <div class="row">
@@ -26,9 +45,12 @@
                             <p><span class="font-bold"><?php echo $this->lang->line('pathology_center'); ?> :</span> <?php echo $result->pathology_center ?></p>                             
                         </div>
                         <div class="col-md-6 text-right"> 
+                            
                             <p><span class="text-muted font-bold"><?php echo $this->lang->line('approve_date'); ?>: </span> <?php echo $this->customlib->YYYYMMDDTodateFormat($result->parameter_update); ?></p>   
                             <p><span class="text-muted font-bold"><?php echo $this->lang->line('report_collection_date'); ?>: </span> <?php echo $this->customlib->YYYYMMDDTodateFormat($result->collection_date); ?></p>
-                            <p><span class="text-muted font-bold"><?php echo $this->lang->line('expected_date'); ?>: </span> <?php echo $this->customlib->YYYYMMDDTodateFormat($result->reporting_date); ?></p>                                            
+                            <p><span class="text-muted font-bold"><?php echo $this->lang->line('expected_date'); ?>: </span> <?php echo $this->customlib->YYYYMMDDTodateFormat($result->reporting_date); ?></p>
+
+                            <?php /* <img src="<?= $qr_code_image_path ? >" style="width: 140px;"> */ ?>                                            
                         </div>
                     </div>
                     <div class="row">

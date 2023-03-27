@@ -1182,7 +1182,7 @@ var passport_image = '<a target="_blank" href="<?php echo base_url() ?>'+res.pas
             window.frames["frame1"].focus();
             window.frames["frame1"].print();
             frame1.remove();           
-        }, 500);
+        }, 2000);
         return true;
     }
     

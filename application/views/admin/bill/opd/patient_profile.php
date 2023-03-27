@@ -2584,7 +2584,7 @@ $genderList = $this->customlib->getGender();
             window.frames["frame1"].print();
             frame1.remove();
            
-        }, 500);
+        }, 2000);
 
         return true;
     }

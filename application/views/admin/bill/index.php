@@ -1587,7 +1587,7 @@ $(document).on('click','.print_transactions',function(){
             window.frames["frame1"].print();
             frame1.remove();
            
-        }, 500);
+        }, 2000);
 
         return true;
     }

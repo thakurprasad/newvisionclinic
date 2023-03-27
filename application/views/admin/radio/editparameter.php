@@ -134,7 +134,7 @@
             window.frames["frame1"].print();
             frame1.remove();
             window.location.reload(true);
-        }, 500);
+        }, 2000);
 
 
         return true;

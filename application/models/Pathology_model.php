@@ -469,6 +469,10 @@ class Pathology_model extends MY_Model
             ->join('charges', 'pathology.charge_id = charges.id')
             ->where('pathology_report.id', $id)
             ->get('pathology_report');
+            
+//           echo  $this->db->last_query();
+
+
 
         if ($query->num_rows() > 0) {
             $result                          = $query->row();

@@ -1771,15 +1771,17 @@ class Pathology extends Admin_Controller
         $print_details         = $this->printing_model->get('', 'pathology');
         $data['print_details'] = $print_details;
         $id                    = $this->input->post('id');
-     /*   $id                    = $_GET['id'];*/
+        $id                    = (isset($_GET['id']) ? $_GET['id'] : $id);
         $data['id']            = $id;
         $result                = $this->pathology_model->getPatientPathologyReportDetails($id);
+        $data['patient_id']   = $result->patient_id;    // new
         $data['result']        = $result;
+        $data['id']         = $id; // new
         $page                  = $this->load->view('admin/pathology/_printPatientReportDetail', $data, true);
-      /*  if(isset($_GET['id'])){
+        if(isset($_GET['qr'])){
             echo $page;
             exit();
-        }*/
+        }
         echo json_encode(array('status' => 1, 'page' => $page));
     }
 

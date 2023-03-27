@@ -4088,7 +4088,7 @@ $(document).on('click','#add_newcharge',function(){
             window.frames["frame1"].focus();
             window.frames["frame1"].print();
             frame1.remove();
-        }, 500);
+        }, 2000);
         return true;
     }
 
