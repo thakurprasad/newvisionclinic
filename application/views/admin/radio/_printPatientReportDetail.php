@@ -43,8 +43,8 @@
                         <tr class="line">
                            <td><strong>#</strong></td>
                            <td class="text-left"><strong><?php echo $this->lang->line('test_parameter_name'); ?></strong></td>
-                           <td class="text-center"><strong><?php echo $this->lang->line('reference_range'); ?></strong></td>
                            <td class="text-right"><strong><?php echo $this->lang->line('report_value'); ?></strong></td>
+                           <td class="text-center"><strong><?php echo $this->lang->line('reference_range'); ?></strong></td>
                         </tr>
                      </thead>
                      <tbody>
@@ -65,12 +65,13 @@
                               <div class="bill_item_footer text-muted"><label><?php if($parameter_value->description !=''){ echo $this->lang->line('description').': ';} ?></label> <?php echo $parameter_value->description; ?></div> 
                           
                       </td> 
+                       <td class="text-right">    
+                   <?php echo $parameter_value->radiology_report_value." ".$parameter_value->unit_name;?>
+                     </td>                             
                     <td class="text-center">                    
                   <?php echo $parameter_value->reference_range." ".$parameter_value->unit_name; ?>                            
                       </td>
-                     <td class="text-right">    
-                   <?php echo $parameter_value->radiology_report_value." ".$parameter_value->unit_name;?>
-                     </td>                             
+                    
                 </tr>                       
                 <?php
             $row_counter++;
