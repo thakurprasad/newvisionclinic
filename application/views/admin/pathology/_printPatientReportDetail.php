@@ -3,7 +3,7 @@
 require_once APPPATH . "/third_party/phpqrcode/qrlib.php";
 $filename =   $id . '_' . $patient_id . ".png";
 $qr_code_image_path =   base_url() . 'uploads/qr-code/QR-'.$filename; // for get url
-$file_dir = FCPATH .'uploads\qr-code\QR-'.$filename; // for save dir url        
+$file_dir = FCPATH .'uploads/qr-code/QR-'.$filename; // for save dir url        
 $errorCorrectionLevel = 'L';
 $matrixPointSize = 6;
 
