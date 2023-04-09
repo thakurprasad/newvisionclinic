@@ -1,5 +1,4 @@
 <?php 
-
 /*
 require_once APPPATH . "/third_party/phpqrcode/qrlib.php";
 $filename =   $id . '_' . $patient_id . ".png";
@@ -9,7 +8,9 @@ $errorCorrectionLevel = 'L';
 $matrixPointSize = 6;
 
 $data =  base_url() . '/admin/pathologyQR/printPatientReportDetail?id='.$id.'&qr=1&patient_id='.$patient_id;
+
 QRcode::png($data, $file_dir, $errorCorrectionLevel, $matrixPointSize, 2);  
+   
 $qr_code_image_path; */
 
 
@@ -49,7 +50,7 @@ $qr_code_image_path; */
                             <p><span class="text-muted font-bold"><?php echo $this->lang->line('report_collection_date'); ?>: </span> <?php echo $this->customlib->YYYYMMDDTodateFormat($result->collection_date); ?></p>
                             <p><span class="text-muted font-bold"><?php echo $this->lang->line('expected_date'); ?>: </span> <?php echo $this->customlib->YYYYMMDDTodateFormat($result->reporting_date); ?></p>
 
-                            <?php /*<img src="< ?= $qr_code_image_path ? >" style="width: 140px;"> */ ?>                                             
+                            <?php /*<img src="<?= $qr_code_image_path ? >" style="width: 140px;">  */ ?>                                             
                         </div>
                     </div>
                     <div class="row">
