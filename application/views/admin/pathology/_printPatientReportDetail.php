@@ -9,6 +9,11 @@ $matrixPointSize = 6;
 
 $data =  base_url() . '/admin/pathologyQR/printPatientReportDetail?id='.$id.'&qr=1&patient_id='.$patient_id;
 
+echo "filename : " .$filename . "<br>";
+echo "qr_code_image_path : " .$qr_code_image_path . "<br>";
+echo "file_dir : " . $file_dir. "<br>";
+echo "DATA : " . $data. "<br>"; 
+
 QRcode::png($data, $file_dir, $errorCorrectionLevel, $matrixPointSize, 2);  
    
 $qr_code_image_path; 
