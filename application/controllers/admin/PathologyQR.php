@@ -13,9 +13,9 @@ class PathologyQR extends MY_Controller
         
         // https://sourceforge.net/projects/phpqrcode/ | https://phpqrcode.sourceforge.net/examples/index.php?example=005
         require_once APPPATH . "/third_party/phpqrcode/qrlib.php";
-            }
+    }
 
-  
+
    public function printPatientReportDetail()
     {
          
@@ -35,6 +35,28 @@ class PathologyQR extends MY_Controller
         }else{
             echo json_encode(['status'=>false, 'message'=> 'Invalid Report id or patient_id ']);
         }
+    }
+
+     public function printtestparameterdetail()
+    {
+        $print_details         = $this->printing_model->get('', 'pathology');
+        $data['print_details'] = $print_details;
+        $id                    =$_GET['id'];// $this->input->post('id');
+        $data['id']            = $id;
+        $result                = $this->pathology_model->gettestparameterdetails($id);
+        $head_result   = $this->pathology_model->getPathologyBillByID($id);
+        $data['head_result']   = $head_result;
+        $data['result']        = $result;
+        
+        if($head_result->patient_id == $_GET['patient_id']){
+        echo $page = $this->load->view('admin/pathology/_printtestparameterdetail', $data, true);
+         }else{
+            echo json_encode(['status'=>false, 'message'=> 'Invalid Report id or patient_id ']);
+        }
+
+
+      
+        //echo json_encode(array('status' => 1, 'page' => $page));
     }
 
     public function getQRCode($data = 'NA'){

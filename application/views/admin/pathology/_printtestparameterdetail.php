@@ -1,3 +1,24 @@
+<?php 
+
+require_once APPPATH . "/third_party/phpqrcode/qrlib.php";
+$filename =   $id . '_' . $head_result->patient_id . ".png";
+$qr_code_image_path =   base_url() . 'uploads/qr-code/_QR-'.$filename; // for get url
+$file_dir = FCPATH .'uploads/qr-code/_QR-'.$filename; // for save dir url        
+$errorCorrectionLevel = 'L';
+$matrixPointSize = 6;
+
+$data_ =  base_url() . '/admin/pathologyQR/printtestparameterdetail?id='.$id.'&patient_id='.$head_result->patient_id;
+/*
+echo "filename : " .$filename . "<br>";
+echo "qr_code_image_path : " .$qr_code_image_path . "<br>";
+echo "file_dir : " . $file_dir. "<br>";
+echo "DATA : " . $data. "<br>"; */
+
+QRcode::png($data_, $file_dir, $errorCorrectionLevel, $matrixPointSize, 2);  
+   
+$qr_code_image_path;  
+?>
+
 <link rel="stylesheet" href="<?php echo base_url(); ?>backend/dist/css/sh-print.css">
 
 <div class="print-area">
@@ -26,7 +47,8 @@
                             
                         </div>
                           <div class="col-md-6 text-right">                                             
-                         <p><span class="font-bold"><?php echo $this->lang->line('date'); ?>: </span> <?php echo $this->customlib->YYYYMMDDHisTodateFormat($head_result->date, $this->customlib->getHospitalTimeFormat()); ?></p>                               
+                         <p><span class="font-bold"><?php echo $this->lang->line('date'); ?>: </span> <?php echo $this->customlib->YYYYMMDDHisTodateFormat($head_result->date, $this->customlib->getHospitalTimeFormat()); ?></p>  
+                              <img src="<?= $qr_code_image_path ?>" style="width: 140px;">                           
                         </div>                       
                     </div>
                     <?php foreach($result as $row){ ?>
@@ -80,6 +102,11 @@
                 </div>
             </div>
           <div style="clear:both"></div>
+           <div style="width:100%; text-align:center;">
+            <h4>CENTRE DE DIAGNOSTIC EYANO</h4>
+            <h5><b>Département de Laboratoire</b></h5>
+            <img src="<?php echo base_url(); ?>/uploads/stemp.png" style="max-width: 250px;">
+        </div>
              <p>
                         <?php
                         if (!empty($print_details[0]['print_footer'])) {
