@@ -460,7 +460,17 @@ class Pathology_model extends MY_Model
 
     public function getPatientPathologyReportDetails($id)
     {
-        $query = $this->db->select('pathology_report.*,pathology.test_name,pathology.short_name,pathology.report_days,pathology.id as pid,pathology.charge_id as charge_id,pathology_billing.case_reference_id,pathology_billing.id as bill_no,pathology_billing.patient_id,pathology_billing.doctor_name,charges.charge_category_id,charges.name as `charge_name`,charges.standard_charge,patients.patient_name as `patient_name`,patients.id as patient_unique_id,patients.age,patients.dob,patients.month,patients.day,patients.gender,patients.blood_group,patients.mobileno,patients.email,patients.address,collection_specialist_staff.name as `collection_specialist_staff_name`,collection_specialist_staff.surname as `collection_specialist_staff_surname`,collection_specialist_staff.employee_id as `collection_specialist_staff_employee_id`,collection_specialist_staff.id as `collection_specialist_staff_id`')
+        $query = $this->db->select('pathology_report.*,pathology.test_name,pathology.short_name,pathology.report_days,pathology.id as pid,pathology.charge_id as charge_id,pathology_billing.case_reference_id,pathology_billing.id as bill_no,pathology_billing.patient_id,pathology_billing.doctor_name,charges.charge_category_id,charges.name as `charge_name`,charges.standard_charge,patients.patient_name as `patient_name`,patients.id as patient_unique_id,patients.age,patients.dob,patients.month,patients.day,patients.gender,patients.blood_group,patients.mobileno,patients.email,patients.address,
+            collection_specialist_staff.name as `collection_specialist_staff_name`,
+            collection_specialist_staff.surname as `collection_specialist_staff_surname`,
+            collection_specialist_staff.employee_id as `collection_specialist_staff_employee_id`,
+            collection_specialist_staff.id as `collection_specialist_staff_id`,
+            approved_staff_list.name as `approved_by_staff_name`,
+approved_staff_list.surname as `approved_by_staff_surname`,
+approved_staff_list.employee_id as `approved_by_staff_employee_id`, 
+
+            '
+        )
             ->join('pathology_billing', 'pathology_report.pathology_bill_id = pathology_billing.id')
             ->join('patients', 'pathology_report.patient_id = patients.id')
             ->join('pathology', 'pathology_report.pathology_id = pathology.id')
